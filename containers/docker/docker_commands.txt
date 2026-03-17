@@ -1,0 +1,16 @@
+//Terminal commands to run docker for own future reference 
+
+//create docker image with name "ascii" in local directory 
+docker build -t "ascii" .
+
+//view all images 
+docker images
+
+//run latest image with name "ascii"
+docker run ascii:latest
+
+//build image with different tag "different" local directory
+docker build -t "ascii:different" .
+
+//run image name "ascii" with tag "different"
+docker run ascii:different
