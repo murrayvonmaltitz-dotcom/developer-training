@@ -1,0 +1,11 @@
+//running a mysql in a docker container
+docker compose up
+
+//viewing all runing contianers
+docker ps
+
+//accessing terminal from container where id is 33a455909ab6
+docker exec -it 33a455909ab6 sh
+
+//enter mysql as user (password required)
+mysql -p 
