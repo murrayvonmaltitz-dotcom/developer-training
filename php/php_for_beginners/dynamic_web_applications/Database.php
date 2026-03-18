@@ -5,16 +5,17 @@ class Database {
 
     public $connection;
 
-    public function __construct() 
+    public function __construct($config, $username = "user", $password = "secret")
     {
-        $dsn = "mysql:host=localhost:3306;dbname=dev_training_demo;charset=utf8mb4;user=user;password=secret";
-        
-        $this->connection = new PDO($dsn);
+        $dsn = 'mysql:' . http_build_query($config, '', ';');
+
+        $this->connection = new PDO($dsn, $username, $password, [
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]);
     }
 
     public function query($query)
     {
-       
         $statement = $this->connection->prepare($query);
 
         $statement->execute();
