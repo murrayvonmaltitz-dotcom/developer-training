@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 
 </head class="h-full">
 
