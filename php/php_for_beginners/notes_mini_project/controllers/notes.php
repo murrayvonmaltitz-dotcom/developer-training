@@ -2,4 +2,4 @@
 
 $heading = "Notes";
 
-require "views/notes.view";
+require "views/notes.view.php";
