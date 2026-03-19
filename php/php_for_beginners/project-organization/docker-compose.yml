@@ -1,0 +1,17 @@
+services:
+    sql:
+        image: mysql:8.4
+        environment:
+            MYSQL_ROOT_PASSWORD: "secret"
+            MYSQL_USER: "user"
+            MYSQL_PASSWORD: "secret"
+            MYSQL_DATABASE: "notes-mini-project"
+        volumes:
+            - mysql84_data:/var/lib/mysql
+        command:
+            - --lower_case_table_names=1
+            - --sql_mode=
+        ports:
+            - 3306:3306
+volumes:
+    mysql84_data:
