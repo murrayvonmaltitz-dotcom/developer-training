@@ -16,7 +16,6 @@ if (!Validator::string($password, 7, 255)) {
     $errors['password'] = 'Please prove a password between 7 and 255 characters';
 }
 
-
 if (! empty($errors)) {
     return view('registration/create.view.php', [
         'errors' => $errors
@@ -35,7 +34,7 @@ if ($user) {
 } else {
     $db->query("INSERT INTO users (email, password) VALUES (:email, :password)", [
         ":email" => $email,
-        ":password" => $password
+        ":password" => password_hash($password, PASSWORD_BCRYPT)
     ]);
 
     $_SESSION['user'] = [
