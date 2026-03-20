@@ -47,9 +47,7 @@ Class Router {
             if ($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
                 //apply the middleware
                 if ($route['middleware']) {
-                    $middleware = CoreMiddleware::MAP[$route['middleware']];
-
-                    (new $middleware)->handle();
+                    CoreMiddleware::resolve($route['middleware']);
                 }
 
                 return require base_path($route['controller']);
