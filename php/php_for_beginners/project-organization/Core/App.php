@@ -2,6 +2,7 @@
 
 namespace Core;
 
+//makes container availible anywhere in application
 class App {
     protected static $container;
 
