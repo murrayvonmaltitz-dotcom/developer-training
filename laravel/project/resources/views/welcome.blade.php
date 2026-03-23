@@ -8,9 +8,10 @@
 <body>
     <h1>Hello World</h1>
 
-    <div>
+    <nav>
+        <a href="/">Home</a>
         <a href="/about">About us</a>
         <a href="/contact">Contact us</a>
-    </div>
+    </nav>
 </body>
 </html>
