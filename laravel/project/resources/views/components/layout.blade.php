@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <style>
+        nav > a {
+            color: blue;
+        }
+    </style>
 </head>
 <body>
-    <!-- slot in unique portion of the page, use <x-layout> to use in view files -->
-    {{ $slot }}
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about">About us</a>
+        <a href="/contact">Contact us</a>
+    </nav>
+    <main>
+        {{ $slot }}
+    </main>
 </body>
 </html>
