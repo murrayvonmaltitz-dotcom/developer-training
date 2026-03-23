@@ -1,0 +1,18 @@
+{
+    "name": "murray/weather_app",
+    "description": "Our first php application",
+    "require": {
+        "guzzlehttp/guzzle": "^7.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Murray\\WeatherApp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Murray von Maltitz",
+            "email": "murray.vonmaltitz@stratusolve.com"
+        }
+    ]
+}
