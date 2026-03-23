@@ -1,0 +1,15 @@
+{
+    "name": "murray/composer-project",
+    "description": "Our new project",
+    "require": {
+        "guzzlehttp/guzzle": "^7.10"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Murray\\ComposerProject\\": "src/"
+        }
+    }
+}
