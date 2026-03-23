@@ -9,8 +9,8 @@ class WeatherService {
     private Client $client; 
 
     public function __construct(
-        private readonly string $apiKey = '7246de415ccc5d4ff9c4fbb2852575d6',
-        private string $apiUrl = 'https://api.openweathermap.org/data/2.5/weather'
+        private readonly string $apiKey = 'dd0d1daa92314679085a7f9f76873df8',
+        private string $apiEndpoint = 'https://api.openweathermap.org/data/2.5/weather'
     )
     {        
         //guzzle specific class
@@ -20,7 +20,7 @@ class WeatherService {
     public function getWeather(string $city): array 
     {
         //adding parameters to api call (guzzle)
-        $response = $this->client->get($this->apiUrl, [
+        $response = $this->client->get($this->apiEndpoint, [
             'query' => [
                 'q' => $city,
                 'appid' => $this->apiKey,
@@ -34,7 +34,7 @@ class WeatherService {
         return [
             'city' => $weatherData['name'],
             'temperature' => $weatherData['main']['temp'],
-            'decription' => $weatherData['weather'][0]['description'],
+            'description' => $weatherData['weather'][0]['description'],
             'humidity' => $weatherData['main']['humidity']
         ];
     }

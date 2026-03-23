@@ -3,7 +3,7 @@
         'name' => 'murray/weather_app',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '7a909a2b17de7af8b88796d2bf32c1f7254dc60f',
+        'reference' => '468a83267c4cfc7ce6e6114df16b0bb7d98897d2',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'murray/weather_app' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '7a909a2b17de7af8b88796d2bf32c1f7254dc60f',
+            'reference' => '468a83267c4cfc7ce6e6114df16b0bb7d98897d2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

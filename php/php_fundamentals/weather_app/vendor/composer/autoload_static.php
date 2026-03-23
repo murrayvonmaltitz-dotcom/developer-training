@@ -13,14 +13,14 @@ class ComposerStaticInit3bb06a7c5f2d2ef0537edc7e898dff4c
     );
 
     public static $prefixLengthsPsr4 = array (
+        'W' =>
+        array (
+            'WeatherApp\\' => 11,
+        ),
         'P' =>
         array (
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
-        ),
-        'M' =>
-        array (
-            'Murray\\WeatherApp\\' => 18,
         ),
         'G' =>
         array (
@@ -31,6 +31,10 @@ class ComposerStaticInit3bb06a7c5f2d2ef0537edc7e898dff4c
     );
 
     public static $prefixDirsPsr4 = array (
+        'WeatherApp\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
         'Psr\\Http\\Message\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
@@ -39,10 +43,6 @@ class ComposerStaticInit3bb06a7c5f2d2ef0537edc7e898dff4c
         'Psr\\Http\\Client\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
-        ),
-        'Murray\\WeatherApp\\' =>
-        array (
-            0 => __DIR__ . '/../..' . '/src',
         ),
         'GuzzleHttp\\Psr7\\' =>
         array (
