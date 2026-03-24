@@ -1,20 +1,27 @@
 
 //Factories and classes
 
-//factory function
-const createGame = function({minRange = 1, maxRange = 10, maxAttempts = 3} = {}) {
+class Game {
+    // # makes the variable private, only accessable within the class
+    #minRange;
+    #maxRange;
+    #maxAttempts;
+    constructor({minRange = 1, maxRange = 10, maxAttempts = 3} = {}) {
+        this.#minRange = minRange
+        this.#maxRange = maxRange
+        this.#maxAttempts = maxAttempts
+    }
 
-    return {
-        play() {
-            const secretNumber = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange
+       play() {
+            const secretNumber = Math.floor(Math.random() * (this.#maxRange - this.#minRange + 1)) + this.#minRange
             const history = [];
 
-            while (history.length < maxAttempts) {
-            var input = prompt(`Attempt ${history.length + 1}: Guess the secret number between ${minRange} and ${maxRange}`);
+            while (history.length < this.#maxAttempts) {
+            var input = prompt(`Attempt ${history.length + 1}: Guess the secret number between ${this.#minRange} and ${this.#maxRange}`);
             var guess = Number(input)
 
-            if (isNaN(guess) || guess < minRange || guess > maxRange) {
-                alert(`Invalid input. Please enter a number between ${minRange} and ${maxRange}.`);
+            if (isNaN(guess) || guess < this.#minRange || guess > this.#maxRange) {
+                alert(`Invalid input. Please enter a number between ${this.#minRange} and ${this.#maxRange}.`);
                 continue
             }
 
@@ -39,8 +46,9 @@ const createGame = function({minRange = 1, maxRange = 10, maxAttempts = 3} = {})
 
         alert(`Game over! The secret number was ${secretNumber}. You ${guessedMessage} in ${history.length} attempts.`);
         alert(`Your guesses were: ${history.join(', ')}`);
-        },
-    }
+        }
 }
 
-game.play();
+let easyGame = new Game({maxAttempts: 10});
+let hardGame = new Game({maxRange: 20, maxAttempts: 5});
+let reallyHardGame = new Game({maxRange: 100, maxAttempts: 5});
