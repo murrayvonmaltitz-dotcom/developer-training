@@ -107,31 +107,65 @@ function createListElement({content}) {
     return element
 }
 
-//add event listener to play game button
-document.getElementById('play-game').addEventListener('click', (e) => {
-    e.preventDefault();
+//single event listner to replace two below, form submit
+document.getElementById('settings-form').addEventListener('submit', (e) => {
+    e.preventDefault()
 
-    let title = document.getElementById('input-title').value;
-    let minRange = document.getElementById('input-min-range').value;
-    let maxRange = document.getElementById('input-max-range').value;
-    let maxAttempts = document.getElementById('input-max-attempts').value;
+    let titleElement = document.getElementById('input-title');
+    let minRangeElement = document.getElementById('input-min-range');
+    let maxRangeElement = document.getElementById('input-max-range');
+    let maxAttemptsElement = document.getElementById('input-max-attempts');
 
-    if (!title || !minRange || !maxRange || !maxAttempts) {
-        alert("Please enter all game settings.");
-        return;
+    const submitterName =  e.submitter.name;
+
+    if (submitterName === 'play-game') {
+        let title = titleElement.value;
+        let minRange = minRangeElement.value;
+        let maxRange = maxRangeElement.value;
+        let maxAttempts = maxAttemptsElement.value;
+
+        if (!title || !minRange || !maxRange || !maxAttempts) {
+            alert("Please enter all game settings.");
+            return;
+        }
+
+        let easyGame = new Game({minRange, maxRange, maxAttempts});
+        easyGame.play()
+    } else {
+        titleElement.value = '';
+        minRangeElement.value = '';
+        maxRangeElement.value = '';
+        maxAttemptsElement.value = '';
+
+        console.clear()
     }
-
-    let easyGame = new Game({minRange, maxRange, maxAttempts});
-    easyGame.play()
 })
 
-document.getElementById('clear-game').addEventListener('click', (e) => {
-    e.preventDefault();
+//add event listener to play game button
+// document.getElementById('play-game').addEventListener('click', (e) => {
+//     e.preventDefault();
 
-    document.getElementById('input-title').value = '';
-    document.getElementById('input-min-range').value = '';
-    document.getElementById('input-max-range').value = '';
-    document.getElementById('input-max-attempts').value = '';
+//     let title = document.getElementById('input-title').value;
+//     let minRange = document.getElementById('input-min-range').value;
+//     let maxRange = document.getElementById('input-max-range').value;
+//     let maxAttempts = document.getElementById('input-max-attempts').value;
 
-    console.clear()
-})
+//     if (!title || !minRange || !maxRange || !maxAttempts) {
+//         alert("Please enter all game settings.");
+//         return;
+//     }
+
+//     let easyGame = new Game({minRange, maxRange, maxAttempts});
+//     easyGame.play()
+// })
+
+// document.getElementById('clear-game').addEventListener('click', (e) => {
+//     e.preventDefault();
+
+//     document.getElementById('input-title').value = '';
+//     document.getElementById('input-min-range').value = '';
+//     document.getElementById('input-max-range').value = '';
+//     document.getElementById('input-max-attempts').value = '';
+
+//     console.clear()
+// })
