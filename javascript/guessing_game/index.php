@@ -24,10 +24,12 @@
         <div class="w-full flex gap-2 justify-center">
             <form id="settings-form">
                  <div class="mb-3">
-                    <input type="radio" name="game-type-selector" id="game-type-mode" value="options-mode"> 
-                        <label for="game-type-mode">Mode</label>
+                    <input type="radio" name="game-type-selector" id="game-type-mode" value="options-mode" checked> 
+                        <label for="game-type-mode" class="mr-2">Mode</label>
                     <input type="radio" name="game-type-selector" id="game-type-custom" value="options-custom">
-                        <label for="game-type-custom">Custom</label>
+                        <label for="game-type-custom" class="mr-5">Custom</label>
+                    <input type="checkbox" name="allow-duplicates-checkbox" id="allow-duplicates-checkbox">
+                    <label for="allow-duplicates-checkbox">Allow Duplicate Guesses</label>
                 </div>
                 <div id="options-custom" class="hidden">
                     <input id="input-title" type="text" placeholder="Game Title" class="border p-2 w-40 bg-gray-900">

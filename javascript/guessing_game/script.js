@@ -1,5 +1,5 @@
 
-//working with "radio" elements
+//check this
 
 const ui = (function() {
     function getBy(cssSelector) {
@@ -9,10 +9,18 @@ const ui = (function() {
     const form = getBy('#settings-form');
     const optionsCustomElement = getBy('#options-custom');
     const optionsModeElement = getBy('#options-mode');
+    const allowedDuplicateElement = getBy('#allow-duplicates-checkbox');
+
+    console.log("allowedDuplicateElement")
+    console.log(allowedDuplicateElement)
 
     return {
         get selectedGameType() {
             return form.elements.namedItem('game-type-selector').value
+        },
+
+        get allowDuplicateGuesses() {
+            return allowedDuplicateElement.checked
         },
 
         ChangeGameType(id) {
@@ -25,7 +33,6 @@ const ui = (function() {
             }
         }
     }
-
 })();
 
 class Game {
@@ -103,8 +110,10 @@ class Game {
             continue
         }
 
-        if (history.indexOf(guess) >-1) {
-            continue;
+        if (!ui.allowDuplicateGuesses) {
+            if (history.indexOf(guess) >-1) {
+                continue;
+            }
         }
 
         history.push(guess)
