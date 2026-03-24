@@ -17,6 +17,11 @@
                 </div>
             </div>
         </nav>
+        <div class="w-full p-3 flex justify-end">
+            <button id="play-game-button" class="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Play Game
+            </button>
+        </div>
         <div class="w-full p-3 text-white">
             <h2 class="font-bold mb-3" id="game-title">Game title</h2>
             <h3 >Rules</h3>

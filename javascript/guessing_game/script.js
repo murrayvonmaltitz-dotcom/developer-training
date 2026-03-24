@@ -1,5 +1,5 @@
 
-//creating elements and content
+//event basics
 
 class Game {
     // # makes the variable private, only accessable within the class
@@ -63,6 +63,12 @@ class Game {
 
         while (history.length < this.#maxAttempts) {
         var input = prompt(`Attempt ${history.length + 1}: Guess the secret number between ${this.#minRange} and ${this.#maxRange}`);
+
+        if (input === null) {
+            console.log("Game cancelled.");
+            break;
+        }
+
         var guess = Number(input)
 
         if (isNaN(guess) || guess < this.#minRange || guess > this.#maxRange) {
@@ -101,32 +107,9 @@ function createListElement({content}) {
     return element
 }
 
-let easyGame = new Game({maxAttempts: 10});
-//access an element from the dom to display the game title
-const gameTitleElement = document.getElementById('game-title')
 
-// gameTitleElement.innerHTML = "Easy Game"
-gameTitleElement.replaceChildren() //removes any existing content before adding new content
-const textNode = document.createTextNode("Easy Game") //alternative to innerHTML
-gameTitleElement.appendChild(textNode)
-
-const rulesListElement = document.querySelector('ul.list-disc.list-inside')
-// rulesListElement.innerHTML = `<li>Min: ${easyGame.minRange}</li>
-// <li>Max: ${easyGame.maxRange}</li>
-// <li>Max Attempts: ${easyGame.maxAttempts}</li>`
-
-//function to replace the above 
-//fragement to reduce document redraws, more efficient 
-const fragment = document.createDocumentFragment()
-
-fragment.appendChild(createListElement({content: `Min: ${easyGame.minRange}`}))
-fragment.appendChild(createListElement({content: `Max: ${easyGame.maxRange}`}))
-fragment.appendChild(createListElement({content: `Max Attempts: ${easyGame.maxAttempts}`}))
-
-rulesListElement.appendChild(fragment)
-
-//return an array
-const headingElement = document.querySelectorAll('h2, h3')
-
-
-// easyGame.play()
+//add event listener to play game button
+document.getElementById('play-game-button').addEventListener('click', () => {
+    let easyGame = new Game({maxAttempts: 10});
+    easyGame.play()
+})
