@@ -54,6 +54,27 @@
             </form>
         </div>
     </div>
+    <div id="game-area" class="w-full p-6 bg-gray-900 mt-6 hidden">
+        <h2 class="text-xl font-bold text-center mb-4">Make a Guess</h2>
+        
+        <div class="flex justify-center items-center gap-2 mb-4">
+            <input id="guess-input" type="number" class="border p-2 w-32 bg-gray-800" placeholder="Your guess">
+            <button id="submit-guess" class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4">
+                Submit
+            </button>
+            <button id="end-game" class="bg-red-500 hover:bg-red-700 font-bold py-2 px-4">
+                Quit
+            </button>
+        </div>
+
+        <div id="guess-feedback" class="text-center text-sm text-yellow-400 mb-2"></div>
+
+        <div id="guesses-list" class="text-center">
+            <h3 class="text-lg font-semibold mb-2">Your Guesses:</h3>
+            <ul id="guess-history" class="list-disc list-inside text-sm text-gray-300">
+            </ul>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

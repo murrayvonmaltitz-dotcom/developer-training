@@ -1,5 +1,5 @@
 
-//filtering inputs
+//manipulating styles
 
 const ui = (function() {
     function getBy(cssSelector) {
@@ -188,6 +188,8 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
     //from select element
     let gameLevelElement = getBy('#game-level');
 
+    const gameAreasElement = getBy('#game-area');
+
     const submitterName =  e.submitter.name;
 
     if (submitterName === 'play-game') {
@@ -211,13 +213,20 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
             maxAttempts = selectedOption.getAttribute('data-max-attempts');
         }
 
-        let easyGame = new Game({minRange, maxRange, maxAttempts});
-        easyGame.play()
+        // gameAreasElement.style.display = 'block'; //alternative to below can also use toggle, but limited to one class at a time
+        gameAreasElement.classList.remove('hidden');
+
+
+        // let easyGame = new Game({minRange, maxRange, maxAttempts});
+        // easyGame.play()
     } else {
         titleElement.value = '';
         minRangeElement.value = '';
         maxRangeElement.value = '';
         maxAttemptsElement.value = '';
+
+        // gameAreasElement.style.display = ''; //alternative to below
+        gameAreasElement.classList.add('hidden');
 
         console.clear()
     }
