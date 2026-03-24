@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Contact Us">
     <h1>Contact Us</h1>
     
     <div>

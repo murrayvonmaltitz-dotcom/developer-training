@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="About Us">
     <h1>About Us</h1>
 
     <div>
