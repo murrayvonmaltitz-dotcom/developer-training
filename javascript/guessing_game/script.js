@@ -1,23 +1,10 @@
 
-//Object Parameters
+//Destructoring objects
 
 const game = (function() {
 
     return {
-        play(options = {}) {
-            if (typeof options.minRange === 'undefined') {
-                options.minRange = 1
-            }
-            if (typeof options.maxRange === 'undefined') {
-                options.maxRange = 10
-            }
-            if (typeof options.maxAttempts === 'undefined') {
-                options.maxAttempts = 3
-            }
-
-            const minRange = options.minRange
-            const maxRange = options.maxRange
-            const maxAttempts = options.maxAttempts
+        play({minRange = 1, maxRange = 10, maxAttempts = 3} = {}) {
 
             const secretNumber = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange
             const history = [];
@@ -56,4 +43,4 @@ const game = (function() {
     }
 })()
 
-game.play({maxAttempts: 2});
+game.play();
