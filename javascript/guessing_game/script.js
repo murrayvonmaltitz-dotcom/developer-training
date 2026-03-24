@@ -1,5 +1,5 @@
 
-//event basics
+//working with "select" elements
 
 class Game {
     // # makes the variable private, only accessable within the class
@@ -107,14 +107,21 @@ function createListElement({content}) {
     return element
 }
 
+function getBy(cssSelector) {
+    return document.querySelector(cssSelector);
+}
+
 //single event listner to replace two below, form submit
 document.getElementById('settings-form').addEventListener('submit', (e) => {
     e.preventDefault()
 
-    let titleElement = document.getElementById('input-title');
-    let minRangeElement = document.getElementById('input-min-range');
-    let maxRangeElement = document.getElementById('input-max-range');
-    let maxAttemptsElement = document.getElementById('input-max-attempts');
+    let titleElement = getBy('#input-title');
+    let minRangeElement = getBy('#input-min-range');
+    let maxRangeElement = getBy('#input-max-range');
+    let maxAttemptsElement = getBy('#input-max-attempts');
+
+    //from select element
+    let gameLevelElement = getBy('#game-level');
 
     const submitterName =  e.submitter.name;
 
@@ -124,10 +131,18 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
         let maxRange = maxRangeElement.value;
         let maxAttempts = maxAttemptsElement.value;
 
-        if (!title || !minRange || !maxRange || !maxAttempts) {
-            alert("Please enter all game settings.");
-            return;
-        }
+        // if (!title || !minRange || !maxRange || !maxAttempts) {
+        //     alert("Please enter all game settings.");
+        //     return;
+        // }
+
+        //get 
+       let selectedOption = gameLevelElement.options[gameLevelElement.selectedIndex];
+       //let selectedOption = gameLevelElement.selectedOptions[0]; //can also use selectedOptions which returns an array of selected options, in this case only one option can be selected so we take the first element
+
+        minRange = selectedOption.getAttribute('data-min-range');
+        maxRange = selectedOption.dataset.maxRange; //from data-max-range attribute, can also use getAttribute
+        maxAttempts = selectedOption.getAttribute('data-max-attempts');
 
         let easyGame = new Game({minRange, maxRange, maxAttempts});
         easyGame.play()
@@ -140,32 +155,3 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
         console.clear()
     }
 })
-
-//add event listener to play game button
-// document.getElementById('play-game').addEventListener('click', (e) => {
-//     e.preventDefault();
-
-//     let title = document.getElementById('input-title').value;
-//     let minRange = document.getElementById('input-min-range').value;
-//     let maxRange = document.getElementById('input-max-range').value;
-//     let maxAttempts = document.getElementById('input-max-attempts').value;
-
-//     if (!title || !minRange || !maxRange || !maxAttempts) {
-//         alert("Please enter all game settings.");
-//         return;
-//     }
-
-//     let easyGame = new Game({minRange, maxRange, maxAttempts});
-//     easyGame.play()
-// })
-
-// document.getElementById('clear-game').addEventListener('click', (e) => {
-//     e.preventDefault();
-
-//     document.getElementById('input-title').value = '';
-//     document.getElementById('input-min-range').value = '';
-//     document.getElementById('input-max-range').value = '';
-//     document.getElementById('input-max-attempts').value = '';
-
-//     console.clear()
-// })
