@@ -1,11 +1,11 @@
 
-//Destructoring objects
+//Factories and classes
 
-const game = (function() {
+//factory function
+const createGame = function({minRange = 1, maxRange = 10, maxAttempts = 3} = {}) {
 
     return {
-        play({minRange = 1, maxRange = 10, maxAttempts = 3} = {}) {
-
+        play() {
             const secretNumber = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange
             const history = [];
 
@@ -41,6 +41,6 @@ const game = (function() {
         alert(`Your guesses were: ${history.join(', ')}`);
         },
     }
-})()
+}
 
 game.play();
