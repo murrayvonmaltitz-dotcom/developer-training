@@ -1,5 +1,5 @@
 
-//finding elements
+//creating elements and content
 
 class Game {
     // # makes the variable private, only accessable within the class
@@ -94,15 +94,36 @@ class Game {
     }
 }
 
+function createListElement({content}) {
+    const element = document.createElement('li')
+    const textNode = document.createTextNode(content)
+    element.appendChild(textNode)
+    return element
+}
+
 let easyGame = new Game({maxAttempts: 10});
 //access an element from the dom to display the game title
 const gameTitleElement = document.getElementById('game-title')
-gameTitleElement.innerHTML = "Easy Game"
+
+// gameTitleElement.innerHTML = "Easy Game"
+gameTitleElement.replaceChildren() //removes any existing content before adding new content
+const textNode = document.createTextNode("Easy Game") //alternative to innerHTML
+gameTitleElement.appendChild(textNode)
 
 const rulesListElement = document.querySelector('ul.list-disc.list-inside')
-rulesListElement.innerHTML = `<li>Min: ${easyGame.minRange}</li>
-<li>Max: ${easyGame.maxRange}</li>
-<li>Max Attempts: ${easyGame.maxAttempts}</li>`
+// rulesListElement.innerHTML = `<li>Min: ${easyGame.minRange}</li>
+// <li>Max: ${easyGame.maxRange}</li>
+// <li>Max Attempts: ${easyGame.maxAttempts}</li>`
+
+//function to replace the above 
+//fragement to reduce document redraws, more efficient 
+const fragment = document.createDocumentFragment()
+
+fragment.appendChild(createListElement({content: `Min: ${easyGame.minRange}`}))
+fragment.appendChild(createListElement({content: `Max: ${easyGame.maxRange}`}))
+fragment.appendChild(createListElement({content: `Max Attempts: ${easyGame.maxAttempts}`}))
+
+rulesListElement.appendChild(fragment)
 
 //return an array
 const headingElement = document.querySelectorAll('h2, h3')
