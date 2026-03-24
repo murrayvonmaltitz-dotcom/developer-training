@@ -1,20 +1,24 @@
-//javascrip arrays
 
-//ways of creating arrays
-let array = new Array(1, 2, 3); //[1, 2, 3]
-let array2 = [1, 2, 3];
-let array3 = Array.of(4) // [4]
-let array4 = Array.from('hello') //['h', 'e', 'l', 'l', 'o']
+//Object Basics
 
 
-//add history to function from episode 6
-const playGame = (function() {
+//basic object creation
+let person = {
+    firstName: "John",
+    lastName: "Doe",
+    getFullName() {
+        return `${this.firstName} ${this.lastName}`
+    }
+}
+
+const game = (function() {
     const secretNumber = Math.floor(Math.random() * 10) + 1
     const maxAttempts = 3
     const history = [];
 
-    return  function() {
-        while (history.length < maxAttempts) {
+    return {
+        play() {
+            while (history.length < maxAttempts) {
             var input = prompt(`Attempt ${history.length + 1}: Guess the secret number between 1 and 10`);
             var guess = Number(input)
 
@@ -23,7 +27,6 @@ const playGame = (function() {
                 continue
             }
 
-            //check if guess is in history array, if it is skip the rest of the loop and prompt again
             if (history.indexOf(guess) >-1) {
                 continue;
             }
@@ -45,7 +48,15 @@ const playGame = (function() {
 
         alert(`Game over! The secret number was ${secretNumber}. You ${guessedMessage} in ${history.length} attempts.`);
         alert(`Your guesses were: ${history.join(', ')}`);
+        },
+        reset() {
+            const secretNumber = Math.floor(Math.random() * 10) + 1
+            history.length = 0
+        },
     }
 })()
 
-playGame()
+//play game twice and reset in between
+game.play();
+game.reset();
+game.play();
