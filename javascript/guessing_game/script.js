@@ -1,5 +1,32 @@
 
-//working with "select" elements
+//working with "radio" elements
+
+const ui = (function() {
+    function getBy(cssSelector) {
+        return document.querySelector(cssSelector);
+    }
+
+    const form = getBy('#settings-form');
+    const optionsCustomElement = getBy('#options-custom');
+    const optionsModeElement = getBy('#options-mode');
+
+    return {
+        get selectedGameType() {
+            return form.elements.namedItem('game-type-selector').value
+        },
+
+        ChangeGameType(id) {
+            if (optionsCustomElement.id === id) {
+                optionsCustomElement.className = 'inline'
+                optionsModeElement.className = 'hidden'
+            } else {
+                optionsCustomElement.className = 'hidden'
+                optionsModeElement.className = 'inline' 
+            }
+        }
+    }
+
+})();
 
 class Game {
     // # makes the variable private, only accessable within the class
@@ -111,6 +138,17 @@ function getBy(cssSelector) {
     return document.querySelector(cssSelector);
 }
 
+
+//global event listener, any input changes on the document 
+document.addEventListener('input', (e) => {
+    //only works on radio buttons with name "game-type-selector"
+    if (e.target.name !== 'game-type-selector') {
+        return;
+    }
+
+    ui.ChangeGameType(e.target.value)
+})
+
 //single event listner to replace two below, form submit
 document.getElementById('settings-form').addEventListener('submit', (e) => {
     e.preventDefault()
@@ -131,18 +169,20 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
         let maxRange = maxRangeElement.value;
         let maxAttempts = maxAttemptsElement.value;
 
-        // if (!title || !minRange || !maxRange || !maxAttempts) {
-        //     alert("Please enter all game settings.");
-        //     return;
-        // }
+        if (ui.selectedGameType === 'options-custom') {
+            if (!title || !minRange || !maxRange || !maxAttempts) {
+                alert("Please enter all game settings.");
+                return;
+            }
+        } else {
+            //get 
+            let selectedOption = gameLevelElement.options[gameLevelElement.selectedIndex];
+            //let selectedOption = gameLevelElement.selectedOptions[0]; //can also use selectedOptions which returns an array of selected options, in this case only one option can be selected so we take the first element
 
-        //get 
-       let selectedOption = gameLevelElement.options[gameLevelElement.selectedIndex];
-       //let selectedOption = gameLevelElement.selectedOptions[0]; //can also use selectedOptions which returns an array of selected options, in this case only one option can be selected so we take the first element
-
-        minRange = selectedOption.getAttribute('data-min-range');
-        maxRange = selectedOption.dataset.maxRange; //from data-max-range attribute, can also use getAttribute
-        maxAttempts = selectedOption.getAttribute('data-max-attempts');
+            minRange = selectedOption.getAttribute('data-min-range');
+            maxRange = selectedOption.dataset.maxRange; //from data-max-range attribute, can also use getAttribute
+            maxAttempts = selectedOption.getAttribute('data-max-attempts');
+        }
 
         let easyGame = new Game({minRange, maxRange, maxAttempts});
         easyGame.play()

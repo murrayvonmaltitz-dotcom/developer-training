@@ -23,18 +23,26 @@
         <h1 class="text-2xl font-bold text-center mb-4">Game Settings</h1>
         <div class="w-full flex gap-2 justify-center">
             <form id="settings-form">
-                <div class="hidden">
+                 <div class="mb-3">
+                    <input type="radio" name="game-type-selector" id="game-type-mode" value="options-mode"> 
+                        <label for="game-type-mode">Mode</label>
+                    <input type="radio" name="game-type-selector" id="game-type-custom" value="options-custom">
+                        <label for="game-type-custom">Custom</label>
+                </div>
+                <div id="options-custom" class="hidden">
                     <input id="input-title" type="text" placeholder="Game Title" class="border p-2 w-40 bg-gray-900">
                     <input id="input-min-range" type="text" placeholder="Min Range" class="border p-2 w-24 bg-gray-900">
                     <input id="input-max-range" type="text" placeholder="Max Range" class="border p-2 w-24 bg-gray-900">
                     <input id="input-max-attempts" type="text" placeholder="Attempts" class="border p-2 w-24 bg-gray-900">
                 </div>
-                <select name="game-level" id="game-level" class="boreder px-2 w-40 bg-gray-900">
-                    <option value="">Select Difficulty</option>
-                    <option data-min-range="1" data-max-range="10" data-max-attempts="10"value="easy">Easy</option>
-                    <option data-min-range="1" data-max-range="20" data-max-attempts="7"value="medium">Medium</option>
-                    <option data-min-range="1" data-max-range="100" data-max-attempts="5"value="hard">Hard</option>
-                </select>
+                <div id="options-mode" class="inline">
+                    <select name="game-level" id="game-level" class="boreder px-2 w-40 bg-gray-900">
+                        <option value="">Select Difficulty</option>
+                        <option data-min-range="1" data-max-range="10" data-max-attempts="10"value="easy">Easy</option>
+                        <option data-min-range="1" data-max-range="20" data-max-attempts="7"value="medium">Medium</option>
+                        <option data-min-range="1" data-max-range="100" data-max-attempts="5"value="hard">Hard</option>
+                    </select>
+                </div>
                     <button name="play-game" id="play-game" class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4">
                     Play Game
                 </button>
