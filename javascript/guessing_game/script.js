@@ -107,9 +107,31 @@ function createListElement({content}) {
     return element
 }
 
-
 //add event listener to play game button
-document.getElementById('play-game-button').addEventListener('click', () => {
-    let easyGame = new Game({maxAttempts: 10});
+document.getElementById('play-game').addEventListener('click', (e) => {
+    e.preventDefault();
+
+    let title = document.getElementById('input-title').value;
+    let minRange = document.getElementById('input-min-range').value;
+    let maxRange = document.getElementById('input-max-range').value;
+    let maxAttempts = document.getElementById('input-max-attempts').value;
+
+    if (!title || !minRange || !maxRange || !maxAttempts) {
+        alert("Please enter all game settings.");
+        return;
+    }
+
+    let easyGame = new Game({minRange, maxRange, maxAttempts});
     easyGame.play()
+})
+
+document.getElementById('clear-game').addEventListener('click', (e) => {
+    e.preventDefault();
+
+    document.getElementById('input-title').value = '';
+    document.getElementById('input-min-range').value = '';
+    document.getElementById('input-max-range').value = '';
+    document.getElementById('input-max-attempts').value = '';
+
+    console.clear()
 })
