@@ -1,5 +1,5 @@
 
-//check this
+//filtering inputs
 
 const ui = (function() {
     function getBy(cssSelector) {
@@ -10,9 +10,6 @@ const ui = (function() {
     const optionsCustomElement = getBy('#options-custom');
     const optionsModeElement = getBy('#options-mode');
     const allowedDuplicateElement = getBy('#allow-duplicates-checkbox');
-
-    console.log("allowedDuplicateElement")
-    console.log(allowedDuplicateElement)
 
     return {
         get selectedGameType() {
@@ -156,6 +153,27 @@ document.addEventListener('input', (e) => {
     }
 
     ui.ChangeGameType(e.target.value)
+})
+
+document.addEventListener('keydown', (e) => {
+    if (e.target.parentNode.id !== 'options-custom') {
+        return;
+    }
+
+    if (e.target.id.indexOf('title') > -1) {
+        return;
+    }
+
+    const allowedKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', "Delete"]
+    const key = e.key
+
+    if (allowedKeys.includes(key) || (key >= 0 && key <= 9)) {
+        console.log("valid input")
+        return;
+    } else {
+        e.preventDefault()
+    }
+
 })
 
 //single event listner to replace two below, form submit
