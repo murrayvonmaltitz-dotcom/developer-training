@@ -1,5 +1,5 @@
 
-//context
+//finding elements
 
 class Game {
     // # makes the variable private, only accessable within the class
@@ -66,7 +66,7 @@ class Game {
         var guess = Number(input)
 
         if (isNaN(guess) || guess < this.#minRange || guess > this.#maxRange) {
-            alert(`Invalid input. Please enter a number between ${this.#minRange} and ${this.#maxRange}.`);
+            console.log(`Invalid input. Please enter a number between ${this.#minRange} and ${this.#maxRange}.`);
             continue
         }
 
@@ -77,23 +77,35 @@ class Game {
         history.push(guess)
 
         if (guess === secretNumber) {
-            alert("Congratulations! You guessed the secret number!");
+            console.log("Congratulations! You guessed the secret number!");
             var guessed = true
             break;
         } else if (guess < secretNumber) {
-            alert(`${guess} is too low!`);
+            console.log(`${guess} is too low!`);
         } else {
-            alert(`${guess} is too high!`);
+            console.log(`${guess} is too high!`);
         }
     }
 
     var guessedMessage = guessed ? "You won!" : "You lost!"
 
-    alert(`Game over! The secret number was ${secretNumber}. You ${guessedMessage} in ${history.length} attempts.`);
-    alert(`Your guesses were: ${history.join(', ')}`);
+    console.log(`Game over! The secret number was ${secretNumber}. You ${guessedMessage} in ${history.length} attempts.`);
+    console.log(`Your guesses were: ${history.join(', ')}`);
     }
 }
 
 let easyGame = new Game({maxAttempts: 10});
+//access an element from the dom to display the game title
+const gameTitleElement = document.getElementById('game-title')
+gameTitleElement.innerHTML = "Easy Game"
 
-easyGame.play()
+const rulesListElement = document.querySelector('ul.list-disc.list-inside')
+rulesListElement.innerHTML = `<li>Min: ${easyGame.minRange}</li>
+<li>Max: ${easyGame.maxRange}</li>
+<li>Max Attempts: ${easyGame.maxAttempts}</li>`
+
+//return an array
+const headingElement = document.querySelectorAll('h2, h3')
+
+
+// easyGame.play()

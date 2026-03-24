@@ -17,6 +17,15 @@
                 </div>
             </div>
         </nav>
+        <div class="w-full p-3 text-white">
+            <h2 class="font-bold mb-3" id="game-title">Game title</h2>
+            <h3 >Rules</h3>
+            <ul class="list-disc list-inside">
+                <li>Rule 1</li>
+                <li>Rule 2</li>
+                <li>Rule 3</li>
+            </ul>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
