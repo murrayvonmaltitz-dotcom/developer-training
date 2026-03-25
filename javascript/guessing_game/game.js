@@ -1,3 +1,5 @@
+import {clearGameState, getGameState, saveGameState} from "./browser-storage.js"
+
 const gameStateKey = 'game-state';
 
 export default class Game {
@@ -19,8 +21,7 @@ export default class Game {
     }
 
     static hasSavedGame() {
-        //if key doesn't exist returns null
-        return localStorage.getItem(gameStateKey);
+        return getGameState()
     }
 
     //checks if the value is a number and within the specified range, if not throws an error with a message, returns the number if valid
@@ -44,13 +45,22 @@ export default class Game {
     }
 
     static loadSavedGame() {
-        const state = JSON.parse(localStorage.getItem(gameStateKey))
-        let game = new Game(state)
+        //.then.catch because it now returns a promise
+        return getGameState().then(state => {
+            if (!state) {
+                return null
+            }
+            
+            let game = new Game(state)
 
-        game.#secretNumber = state.secretNumber
-        game.history = state.history
+            game.#secretNumber = state.secretNumber
+            game.history = state.history
 
-        return game
+            return game
+        }).catch((error) => {
+            console.log(error)
+        })
+       
     }
 
     checkGuess(guess) {
@@ -85,18 +95,18 @@ export default class Game {
                 }
             }));
             
-            localStorage.removeItem(gameStateKey)
+            clearGameState()
             return 
         }
 
-        localStorage.setItem(gameStateKey, JSON.stringify({
+       saveGameState({
             minRange: this.#minRange,
             maxRange: this.#maxRange,
             maxAttempts: this.#maxAttempts,
             allowDuplicateGuesses: this.#allowDuplicateGuesses,
             secretNumber: this.#secretNumber,
             history: this.history
-        }))
+        })
 
     }
 

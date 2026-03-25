@@ -110,17 +110,23 @@ export const ui = {
 
 export function init() {
 
-    if (Game.hasSavedGame()) {
-        if (confirm("Do you wnat to continue the saved game?")) {
-            game = Game.loadSavedGame();
+    Game.loadSavedGame().then((savedGame) => {
 
+        if (!savedGame) {
+            return
+        } 
+
+        if (confirm("Do you wnat to continue the saved game?")) {    
+            game = savedGame;
+            
             ui.gameArea.show()
             ui.gameArea.disabled = false
             ui.settings.disabled = true
-
+            
             game.history.forEach(value => ui.updateHistory(value))
         }
-    } 
+
+    }).catch(error => console.error(error));
 
     document.getElementById('settings-form').addEventListener('submit', (e) => {
         e.preventDefault()

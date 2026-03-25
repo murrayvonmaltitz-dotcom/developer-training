@@ -1,4 +1,4 @@
-//storing into browsers
+//promises
 
 import { ui, init } from "./ui.js"
 
