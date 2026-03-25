@@ -122,10 +122,6 @@ export async function init() {
             }
         } 
 
-       
-
-    
-
     document.getElementById('settings-form').addEventListener('submit', (e) => {
         e.preventDefault()
 

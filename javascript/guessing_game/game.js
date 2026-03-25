@@ -1,4 +1,4 @@
-import {clearGameState, getGameState, saveGameState} from "./browser-storage.js"
+import {clearGameState, getGameState, saveGameState} from "./server-storage.js"
 
 const gameStateKey = 'game-state';
 

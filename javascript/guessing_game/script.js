@@ -1,4 +1,4 @@
-//async await
+//fetch request
 
 import { ui, init } from "./ui.js"
 
