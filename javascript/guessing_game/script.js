@@ -1,5 +1,6 @@
 
-//real custom events
+//Blowing (event) bubbles
+//allows us to create global event listeners which is more efficient for the browser
 
 const ui = (function() {
     function getBy(cssSelector) {
@@ -19,12 +20,16 @@ const ui = (function() {
     document.addEventListener('click', (e) => {
         if (e.target.id === 'submit-guess') {
             document.dispatchEvent(new CustomEvent("ui:submit-guess", {
+                //originates from button and will "bubble up" to the document
+                bubbles: true,
                 detail: {
                     guess: ui.getGuess()
                 }
             }))
         } else if (e.target.id === 'end-game') {
-            document.dispatchEvent(new Event('ui:end-game'))
+            document.dispatchEvent(new Event('ui:end-game'), {
+                bubbles: true
+            })
         }
     })
 
@@ -328,7 +333,8 @@ document.addEventListener('game:guess', (e) => {
 }) 
 
 document.addEventListener("ui:submit-guess", (e) => {
-        const guess = e.detail
+    
+        const {guess} = e.detail
 
         if (isNaN(guess) || guess < game.minRange || guess > game.maxRange) {
             ui.showFeedback(`Invalid input. Please enter a number between ${game.minRange} and ${game.maxRange}.`);
