@@ -74,6 +74,8 @@
             </ul>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="game.js" type="module"></script>
+    <script src="ui.js" type="module"></script>
+    <script src="script.js" type="module"></script>
 </body>
 </html>
