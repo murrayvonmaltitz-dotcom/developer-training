@@ -1,5 +1,5 @@
 
-//event driven development
+//disabling forms
 
 const ui = (function() {
     function getBy(cssSelector) {
@@ -21,6 +21,41 @@ const ui = (function() {
 
         get allowDuplicateGuesses() {
             return allowedDuplicateElement.checked
+        },
+
+        settings: {
+            set disabled(value) {
+                //form controls (inputs, buttons, selects)
+                //not an array but has length and can be accessed by index.
+                const elements = form.elements;
+
+                for (let ii = 0; ii < elements.length; ii++) {
+                    elements[ii].disabled = value;
+                }
+            }
+
+            //alternatives to above
+            // [...form.elements].forEach(element => {
+            //     element.disabled = value;
+            // });
+
+            // Array.from(form.elements).forEach(el => {
+            //     el.disabled = value;
+            // });
+
+            // Array.prototype.forEach.call(form.elements, el => {
+            //     el.disabled = value;
+            // });
+        },
+
+        ChangeGameType(id) {
+            if (optionsCustomElement.id === id) {
+                optionsCustomElement.className = 'inline'
+                optionsModeElement.className = 'hidden'
+            } else {
+                optionsCustomElement.className = 'hidden'
+                optionsModeElement.className = 'inline' 
+            }
         },
 
         getGuess() {
@@ -49,16 +84,6 @@ const ui = (function() {
         updateHistory(result) {
             historyElement.innerHTML += `<li>${result}</li>`;
         },
-
-        ChangeGameType(id) {
-            if (optionsCustomElement.id === id) {
-                optionsCustomElement.className = 'inline'
-                optionsModeElement.className = 'hidden'
-            } else {
-                optionsCustomElement.className = 'hidden'
-                optionsModeElement.className = 'inline' 
-            }
-        }
     }
 })();
 
@@ -228,7 +253,6 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
                 return;
             }
         } else {
-            //get 
             let selectedOption = gameLevelElement.options[gameLevelElement.selectedIndex];
             //let selectedOption = gameLevelElement.selectedOptions[0]; //can also use selectedOptions which returns an array of selected options, in this case only one option can be selected so we take the first element
 
@@ -240,10 +264,11 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
         // gameAreasElement.style.display = 'block'; //alternative to below can also use toggle, but limited to one class at a time
         gameAreasElement.classList.remove('hidden');
 
-        ui.resetHistory();
+        ui.reset();
 
         game = new Game({minRange, maxRange, maxAttempts, allowDuplicateGuesses});
-        // easyGame.play()
+
+        ui.settings.disabled = true;
     } else {
         titleElement.value = '';
         minRangeElement.value = '';
@@ -275,5 +300,7 @@ document.addEventListener('click', (e) => {
         ui.updateHistory(`${guess} is ${result}`);
 
         ui.resetGuess();
+    } else if (e.target.id === 'end-game') {
+        ui.settings.disabled = false;
     }
 })

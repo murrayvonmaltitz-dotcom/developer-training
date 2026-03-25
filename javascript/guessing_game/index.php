@@ -24,31 +24,30 @@
         <div class="w-full flex gap-2 justify-center">
             <form id="settings-form">
                  <div class="mb-3">
-                    <input type="radio" name="game-type-selector" id="game-type-mode" value="options-mode" checked> 
+                    <input type="radio" name="game-type-selector" id="game-type-mode" value="options-mode" checked class="disabled:opacity-50"> 
                         <label for="game-type-mode" class="mr-2">Mode</label>
-                    <input type="radio" name="game-type-selector" id="game-type-custom" value="options-custom">
+                    <input type="radio" name="game-type-selector" id="game-type-custom" value="options-custom" class="disabled:opacity-50">
                         <label for="game-type-custom" class="mr-5">Custom</label>
-                    <input type="checkbox" name="allow-duplicates-checkbox" id="allow-duplicates-checkbox">
+                    <input type="checkbox" name="allow-duplicates-checkbox" id="allow-duplicates-checkbox" class="disabled:opacity-50">
                     <label for="allow-duplicates-checkbox">Allow Duplicate Guesses</label>
                 </div>
                 <div id="options-custom" class="hidden">
-                    <input id="input-title" type="text" placeholder="Game Title" class="border p-2 w-40 bg-gray-900">
-                    <input id="input-min-range" type="text" placeholder="Min Range" class="border p-2 w-24 bg-gray-900">
-                    <input id="input-max-range" type="text" placeholder="Max Range" class="border p-2 w-24 bg-gray-900">
-                    <input id="input-max-attempts" type="text" placeholder="Attempts" class="border p-2 w-24 bg-gray-900">
+                    <input id="input-title" type="text" placeholder="Game Title" class="border p-2 w-40 bg-gray-900 disabled:opacity-50">
+                    <input id="input-min-range" type="text" placeholder="Min Range" class="border p-2 w-24 bg-gray-900 disabled:opacity-50">
+                    <input id="input-max-range" type="text" placeholder="Max Range" class="border p-2 w-24 bg-gray-900 disabled:opacity-50">
+                    <input id="input-max-attempts" type="text" placeholder="Attempts" class="border p-2 w-24 bg-gray-900 disabled:opacity-50">
                 </div>
                 <div id="options-mode" class="inline">
-                    <select name="game-level" id="game-level" class="boreder px-2 w-40 bg-gray-900">
-                        <option value="">Select Difficulty</option>
+                    <select name="game-level" id="game-level" class="boreder px-2 w-40 bg-gray-900 disabled:opacity-50">
                         <option data-min-range="1" data-max-range="10" data-max-attempts="10"value="easy">Easy</option>
                         <option data-min-range="1" data-max-range="20" data-max-attempts="7"value="medium">Medium</option>
                         <option data-min-range="1" data-max-range="100" data-max-attempts="5"value="hard">Hard</option>
                     </select>
                 </div>
-                    <button name="play-game" id="play-game" class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4">
+                    <button name="play-game" id="play-game" class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 disabled:bg-blue-500 disabled:opacity-50">
                     Play Game
                 </button>
-                <button name="clear-game" id="clear-game" class="bg-gray-500 hover:bg-gray-700 font-bold py-2 px-4">
+                <button name="clear-game" id="clear-game" class="bg-gray-500 hover:bg-gray-700 font-bold py-2 px-4 disabled:bg-gray-500 disabled:opacity-50">
                     Clear
                 </button>
             </form>
