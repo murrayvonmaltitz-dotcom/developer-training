@@ -12,6 +12,7 @@ const ui = (function() {
     const allowedDuplicateElement = getBy('#allow-duplicates-checkbox');
     const inputGuessElement = getBy('#guess-input');
     const feedbackElement = getBy('#guess-feedback');
+    const historyElement = getBy('#guess-history');
 
     return {
         get selectedGameType() {
@@ -23,12 +24,30 @@ const ui = (function() {
         },
 
         getGuess() {
-            console.log("inputGuessElement: ", inputGuessElement)
             return parseInt(inputGuessElement.value);
+        },
+
+        reset() {
+            this.resetHistory();
+            this.resetGuess();
+            this.showFeedback('');
+        },
+
+        resetGuess() {
+            inputGuessElement.value = '';
+            inputGuessElement.focus();
+        },
+        
+        resetHistory() {
+            historyElement.innerHTML = '';
         },
 
         showFeedback(result) {
             feedbackElement.innerHTML = result;
+        },
+
+        updateHistory(result) {
+            historyElement.innerHTML += `<li>${result}</li>`;
         },
 
         ChangeGameType(id) {
@@ -221,6 +240,7 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
         // gameAreasElement.style.display = 'block'; //alternative to below can also use toggle, but limited to one class at a time
         gameAreasElement.classList.remove('hidden');
 
+        ui.resetHistory();
 
         game = new Game({minRange, maxRange, maxAttempts, allowDuplicateGuesses});
         // easyGame.play()
@@ -229,11 +249,10 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
         minRangeElement.value = '';
         maxRangeElement.value = '';
         maxAttemptsElement.value = '';
+        ui.reset();
 
         // gameAreasElement.style.display = ''; //alternative to below
         gameAreasElement.classList.add('hidden');
-
-        console.clear()
     }
 })
 
@@ -245,11 +264,16 @@ document.addEventListener('click', (e) => {
 
         if (isNaN(guess) || guess < game.minRange || guess > game.maxRange) {
             ui.showFeedback(`Invalid input. Please enter a number between ${game.minRange} and ${game.maxRange}.`);
+            ui.resetGuess();
             return;
         }
         
         const result = game.checkGuess(guess);
 
         ui.showFeedback(`${guess} is ${result}`);
+
+        ui.updateHistory(`${guess} is ${result}`);
+
+        ui.resetGuess();
     }
 })
