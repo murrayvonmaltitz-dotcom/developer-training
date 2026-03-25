@@ -1,5 +1,5 @@
 
-//using callbacks
+//real custom events
 
 const ui = (function() {
     function getBy(cssSelector) {
@@ -15,6 +15,18 @@ const ui = (function() {
     const historyElement = getBy('#guess-history');
 
     const gameAreasElement = getBy('#game-area');
+
+    document.addEventListener('click', (e) => {
+        if (e.target.id === 'submit-guess') {
+            document.dispatchEvent(new CustomEvent("ui:submit-guess", {
+                detail: {
+                    guess: ui.getGuess()
+                }
+            }))
+        } else if (e.target.id === 'end-game') {
+            document.dispatchEvent(new Event('ui:end-game'))
+        }
+    })
 
     return {
         get selectedGameType() {
@@ -113,7 +125,7 @@ class Game {
     #maxRange;
     #maxAttempts;
     #allowDuplicateGuesses;
-    #onEndCallbacks = [];
+    #secretNumber;
 
     constructor({minRange = 1, maxRange = 10, maxAttempts = 3, allowDuplicateGuesses = false} = {}) {
         this.#minRange = Game.initRangeValues({value: minRange, lowerBound: 1, upperBound: maxRange});
@@ -122,7 +134,7 @@ class Game {
         this.#maxAttempts = parseInt(maxAttempts)
         this.#allowDuplicateGuesses = allowDuplicateGuesses
         this.history = [];
-        this.secretNumber = Math.floor(Math.random() * (this.#maxRange - this.#minRange + 1)) + this.#minRange;
+        this.#secretNumber = Math.floor(Math.random() * (this.#maxRange - this.#minRange + 1)) + this.#minRange;
     }
 
     //checks if the value is a number and within the specified range, if not throws an error with a message, returns the number if valid
@@ -145,42 +157,41 @@ class Game {
         return num;
     }
 
-    addOnEnd(fn) {
-        this.#onEndCallbacks.push(fn);
-    }
-
     checkGuess(guess) {
 
         if (this.maxAttempts === this.history.length) {
             return //todo throw error?
         }
 
-        if (!this.#allowDuplicateGuesses) {
-            if (this.history.indexOf(guess) > -1) {
-                return;
-            }
+        if (!this.#allowDuplicateGuesses && this.history.indexOf(guess) > -1) {
+            return;
         }
 
         this.history.push(guess);
 
-        if (guess === this.secretNumber || this.history.length === this.#maxAttempts) {
-            //loops trough the onEndCallbacks array and calls each function, checks if the element is a function before calling it
-            this.#onEndCallbacks.forEach(fn => {
-                if (typeof fn === 'function') {
-                    fn();
+        const isCorrect = guess == this.#secretNumber;
+        const isLastAttempt = this.#maxAttempts === this.history.length
+        const result = isCorrect ? "Correct" :
+            guess < this.#secretNumber ? "too low" : "too high"
+
+        document.dispatchEvent(new CustomEvent('game:guess', {
+            detail: {
+                guess,
+                result,
+                remainingAttempts: this.#maxAttempts - this.history.length
+            }
+        }))
+
+
+        if (isCorrect || isLastAttempt) {
+            document.dispatchEvent(new CustomEvent('game:over', {
+                detail: {
+                    secretNumber: this.#secretNumber
                 }
-            })
+            }));
         }
 
-        if (guess === this.secretNumber) {
-            return 'correct!';
-        } else if (guess < this.secretNumber) {
-            return `too low.`;
-        } else {
-           return `too high.`;
-        }
     }
-
 
     //getters and setters for minRange, maxRange, and maxAttempts with validation using the static method initRangeValues
     get minRange() {
@@ -289,17 +300,6 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
         ui.settings.disabled = true;
         ui.gameArea.disabled = false;
 
-        //add two functions to run when the game ends 
-        game.addOnEnd(function() {
-            ui.showFeedback("Game over!")
-            ui.settings.disabled = false;
-            ui.gameArea.disabled = true;
-        })
-
-        game.addOnEnd(() => {
-            alert('game over');
-        })
-
     } else {
         titleElement.value = '';
         minRangeElement.value = '';
@@ -309,13 +309,26 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
 
         ui.gameArea.hide();
     }
+});
+
+//create custom event listener
+document.addEventListener('game:over', (e) => {
+    const secretNumber = e.detail.secretNumber;
+
+    ui.showFeedback(`Game Over! the secret number is ${secretNumber}`)
+    ui.settings.disabled = false;
+    ui.gameArea.disabled = true;
 })
 
+document.addEventListener('game:guess', (e) => {
+    const {guess, result, remainingAttempts} = e.detail
 
-//get the guess and 
-document.addEventListener('click', (e) => {
-    if (e.target.id === 'submit-guess') {
-        const guess = ui.getGuess();
+    ui.updateHistory(`${guess} is ${result}`);
+    ui.showFeedback(`You have ${remainingAttempts} remaining attempts`)
+}) 
+
+document.addEventListener("ui:submit-guess", (e) => {
+        const guess = e.detail
 
         if (isNaN(guess) || guess < game.minRange || guess > game.maxRange) {
             ui.showFeedback(`Invalid input. Please enter a number between ${game.minRange} and ${game.maxRange}.`);
@@ -323,12 +336,11 @@ document.addEventListener('click', (e) => {
             return;
         }
         
-        const result = game.checkGuess(guess);
-
-        ui.updateHistory(`${guess} is ${result}`);
+        game.checkGuess(guess);
 
         ui.resetGuess();
-    } else if (e.target.id === 'end-game') {
-        ui.settings.disabled = false;
-    }
+})
+
+document.addEventListener("ui:end-game", (e) => {
+    ui.settings.disabled = false;
 })
