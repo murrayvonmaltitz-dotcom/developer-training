@@ -1,17 +1,7 @@
-export async function clearGameState() {
-    
-}
+const jsonContentType = 'application/json';
 
-export async function getGameState() {
-    const params = new URLSearchParams({
-        minRange: 1,
-        maxRange: 10,
-        maxAttempts: 5,
-        allowDuplicateGuesses: false,
-        secretNumber: 7
-    });
-
-    const response = await fetch(`get.php?${params}`, {
+async function getJson(url) {
+    const response = await fetch(url, {
         headers: {
             'Accept' : 'application/json',
         }
@@ -22,8 +12,49 @@ export async function getGameState() {
     }
 
     return await response.json();
+}
+
+async function sendFormData({
+    minRange, maxRange, maxAttempts,
+    secretNumber, allowDuplicateGuesses, history
+}) {
+    const formData = new FormData();
+    formData.append('minRange', minRange);
+    formData.append('maxRange', maxRange);
+    formData.append('maxAttempts', maxAttempts);
+    formData.append('secretNumber', secretNumber);
+    formData.append('allowDuplicateGuesses', allowDuplicateGuesses);
+    
+    history.forEach(element => {
+        formData.append('history[]', element);
+    });
+
+    await fetch('save.php', {
+        method: 'POST',
+        body: formData
+    });
+}
+
+async function sendJson(stateObj) {
+    await fetch('save.php', {
+        headers: {
+            'Content-Type': jsonContentType,
+            'Accept': jsonContentType,
+        },
+        method: 'POST',
+        body: JSON.stringify(stateObj)
+    });
+}
+
+export async function clearGameState() {
+    return await getJson('clear.php');
+}
+
+export async function getGameState() {
+    return await getJson('get.php');
 };
 
 export async function saveGameState(stateObj) {
-    
+    // await sendFormData(stateObj);
+    await sendJson(stateObj);
 };
