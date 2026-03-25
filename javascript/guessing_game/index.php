@@ -57,11 +57,11 @@
         <h2 class="text-xl font-bold text-center mb-4">Make a Guess</h2>
         
         <div class="flex justify-center items-center gap-2 mb-4">
-            <input id="guess-input" type="number" class="border p-2 w-32 bg-gray-800" placeholder="Your guess">
-            <button id="submit-guess" class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4">
+            <input id="guess-input" type="number" class="border p-2 w-32 bg-gray-800 disabled:opacity-50" placeholder="Your guess">
+            <button id="submit-guess" class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 disabled:bg-blue-500 disabled:opacity-50">
                 Submit
             </button>
-            <button id="end-game" class="bg-red-500 hover:bg-red-700 font-bold py-2 px-4">
+            <button id="end-game" class="bg-red-500 hover:bg-red-700 font-bold py-2 px-4 disabled:bg-red-500 disabled:opacity-50">
                 Quit
             </button>
         </div>

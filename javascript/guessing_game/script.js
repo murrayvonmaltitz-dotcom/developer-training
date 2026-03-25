@@ -1,5 +1,5 @@
 
-//disabling forms
+//using callbacks
 
 const ui = (function() {
     function getBy(cssSelector) {
@@ -14,6 +14,8 @@ const ui = (function() {
     const feedbackElement = getBy('#guess-feedback');
     const historyElement = getBy('#guess-history');
 
+    const gameAreasElement = getBy('#game-area');
+
     return {
         get selectedGameType() {
             return form.elements.namedItem('game-type-selector').value
@@ -21,6 +23,24 @@ const ui = (function() {
 
         get allowDuplicateGuesses() {
             return allowedDuplicateElement.checked
+        },
+
+        gameArea: {
+            set disabled(value) {
+                const elements = gameAreasElement.querySelectorAll('input, button');
+
+                for (let ii = 0; ii < elements.length; ii++) {
+                    elements[ii].disabled = value;
+                }
+            },
+
+            hide() {
+                gameAreasElement.classList.add('hidden');
+            },
+
+            show() {
+                gameAreasElement.classList.remove('hidden');
+            }
         },
 
         settings: {
@@ -93,11 +113,13 @@ class Game {
     #maxRange;
     #maxAttempts;
     #allowDuplicateGuesses;
+    #onEndCallbacks = [];
 
     constructor({minRange = 1, maxRange = 10, maxAttempts = 3, allowDuplicateGuesses = false} = {}) {
         this.#minRange = Game.initRangeValues({value: minRange, lowerBound: 1, upperBound: maxRange});
         this.#maxRange = Game.initRangeValues({value: maxRange, lowerBound: minRange});
-        this.#maxAttempts = maxAttempts
+        
+        this.#maxAttempts = parseInt(maxAttempts)
         this.#allowDuplicateGuesses = allowDuplicateGuesses
         this.history = [];
         this.secretNumber = Math.floor(Math.random() * (this.#maxRange - this.#minRange + 1)) + this.#minRange;
@@ -123,7 +145,15 @@ class Game {
         return num;
     }
 
+    addOnEnd(fn) {
+        this.#onEndCallbacks.push(fn);
+    }
+
     checkGuess(guess) {
+
+        if (this.maxAttempts === this.history.length) {
+            return //todo throw error?
+        }
 
         if (!this.#allowDuplicateGuesses) {
             if (this.history.indexOf(guess) > -1) {
@@ -132,6 +162,15 @@ class Game {
         }
 
         this.history.push(guess);
+
+        if (guess === this.secretNumber || this.history.length === this.#maxAttempts) {
+            //loops trough the onEndCallbacks array and calls each function, checks if the element is a function before calling it
+            this.#onEndCallbacks.forEach(fn => {
+                if (typeof fn === 'function') {
+                    fn();
+                }
+            })
+        }
 
         if (guess === this.secretNumber) {
             return 'correct!';
@@ -166,23 +205,6 @@ class Game {
     
     set maxAttempts(value) {
         let num = value
-    }
-
-    play() {
-        const history = [];
-
-        while (history.length < this.#maxAttempts) {
-
-        if (this.checkGuess(guess)) {
-                var guessed = true;
-                break;
-            }    
-    }
-
-    var guessedMessage = guessed ? "You won!" : "You lost!"
-
-    console.log(`Game over! The secret number was ${secretNumber}. You ${guessedMessage} in ${history.length} attempts.`);
-    console.log(`Your guesses were: ${history.join(', ')}`);
     }
 }
 
@@ -236,8 +258,6 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
     //from select element
     let gameLevelElement = getBy('#game-level');
 
-    const gameAreasElement = getBy('#game-area');
-
     const submitterName =  e.submitter.name;
     const allowDuplicateGuesses = ui.allowDuplicateGuesses;
 
@@ -261,14 +281,25 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
             maxAttempts = selectedOption.getAttribute('data-max-attempts');
         }
 
-        // gameAreasElement.style.display = 'block'; //alternative to below can also use toggle, but limited to one class at a time
-        gameAreasElement.classList.remove('hidden');
+        ui.gameArea.show();
 
         ui.reset();
 
         game = new Game({minRange, maxRange, maxAttempts, allowDuplicateGuesses});
-
         ui.settings.disabled = true;
+        ui.gameArea.disabled = false;
+
+        //add two functions to run when the game ends 
+        game.addOnEnd(function() {
+            ui.showFeedback("Game over!")
+            ui.settings.disabled = false;
+            ui.gameArea.disabled = true;
+        })
+
+        game.addOnEnd(() => {
+            alert('game over');
+        })
+
     } else {
         titleElement.value = '';
         minRangeElement.value = '';
@@ -276,8 +307,7 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
         maxAttemptsElement.value = '';
         ui.reset();
 
-        // gameAreasElement.style.display = ''; //alternative to below
-        gameAreasElement.classList.add('hidden');
+        ui.gameArea.hide();
     }
 })
 
@@ -294,8 +324,6 @@ document.addEventListener('click', (e) => {
         }
         
         const result = game.checkGuess(guess);
-
-        ui.showFeedback(`${guess} is ${result}`);
 
         ui.updateHistory(`${guess} is ${result}`);
 
