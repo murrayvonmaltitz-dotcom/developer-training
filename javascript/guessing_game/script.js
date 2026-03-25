@@ -1,5 +1,5 @@
 
-//manipulating styles
+//event driven development
 
 const ui = (function() {
     function getBy(cssSelector) {
@@ -10,6 +10,8 @@ const ui = (function() {
     const optionsCustomElement = getBy('#options-custom');
     const optionsModeElement = getBy('#options-mode');
     const allowedDuplicateElement = getBy('#allow-duplicates-checkbox');
+    const inputGuessElement = getBy('#guess-input');
+    const feedbackElement = getBy('#guess-feedback');
 
     return {
         get selectedGameType() {
@@ -18,6 +20,15 @@ const ui = (function() {
 
         get allowDuplicateGuesses() {
             return allowedDuplicateElement.checked
+        },
+
+        getGuess() {
+            console.log("inputGuessElement: ", inputGuessElement)
+            return parseInt(inputGuessElement.value);
+        },
+
+        showFeedback(result) {
+            feedbackElement.innerHTML = result;
         },
 
         ChangeGameType(id) {
@@ -37,10 +48,15 @@ class Game {
     #minRange;
     #maxRange;
     #maxAttempts;
-    constructor({minRange = 1, maxRange = 10, maxAttempts = 3} = {}) {
+    #allowDuplicateGuesses;
+
+    constructor({minRange = 1, maxRange = 10, maxAttempts = 3, allowDuplicateGuesses = false} = {}) {
         this.#minRange = Game.initRangeValues({value: minRange, lowerBound: 1, upperBound: maxRange});
         this.#maxRange = Game.initRangeValues({value: maxRange, lowerBound: minRange});
         this.#maxAttempts = maxAttempts
+        this.#allowDuplicateGuesses = allowDuplicateGuesses
+        this.history = [];
+        this.secretNumber = Math.floor(Math.random() * (this.#maxRange - this.#minRange + 1)) + this.#minRange;
     }
 
     //checks if the value is a number and within the specified range, if not throws an error with a message, returns the number if valid
@@ -62,6 +78,26 @@ class Game {
 
         return num;
     }
+
+    checkGuess(guess) {
+
+        if (!this.#allowDuplicateGuesses) {
+            if (this.history.indexOf(guess) > -1) {
+                return;
+            }
+        }
+
+        this.history.push(guess);
+
+        if (guess === this.secretNumber) {
+            return 'correct!';
+        } else if (guess < this.secretNumber) {
+            return `too low.`;
+        } else {
+           return `too high.`;
+        }
+    }
+
 
     //getters and setters for minRange, maxRange, and maxAttempts with validation using the static method initRangeValues
     get minRange() {
@@ -89,41 +125,14 @@ class Game {
     }
 
     play() {
-        const secretNumber = Math.floor(Math.random() * (this.#maxRange - this.#minRange + 1)) + this.#minRange
         const history = [];
 
         while (history.length < this.#maxAttempts) {
-        var input = prompt(`Attempt ${history.length + 1}: Guess the secret number between ${this.#minRange} and ${this.#maxRange}`);
 
-        if (input === null) {
-            console.log("Game cancelled.");
-            break;
-        }
-
-        var guess = Number(input)
-
-        if (isNaN(guess) || guess < this.#minRange || guess > this.#maxRange) {
-            console.log(`Invalid input. Please enter a number between ${this.#minRange} and ${this.#maxRange}.`);
-            continue
-        }
-
-        if (!ui.allowDuplicateGuesses) {
-            if (history.indexOf(guess) >-1) {
-                continue;
-            }
-        }
-
-        history.push(guess)
-
-        if (guess === secretNumber) {
-            console.log("Congratulations! You guessed the secret number!");
-            var guessed = true
-            break;
-        } else if (guess < secretNumber) {
-            console.log(`${guess} is too low!`);
-        } else {
-            console.log(`${guess} is too high!`);
-        }
+        if (this.checkGuess(guess)) {
+                var guessed = true;
+                break;
+            }    
     }
 
     var guessedMessage = guessed ? "You won!" : "You lost!"
@@ -131,13 +140,6 @@ class Game {
     console.log(`Game over! The secret number was ${secretNumber}. You ${guessedMessage} in ${history.length} attempts.`);
     console.log(`Your guesses were: ${history.join(', ')}`);
     }
-}
-
-function createListElement({content}) {
-    const element = document.createElement('li')
-    const textNode = document.createTextNode(content)
-    element.appendChild(textNode)
-    return element
 }
 
 function getBy(cssSelector) {
@@ -176,6 +178,8 @@ document.addEventListener('keydown', (e) => {
 
 })
 
+let game;   
+
 //single event listner to replace two below, form submit
 document.getElementById('settings-form').addEventListener('submit', (e) => {
     e.preventDefault()
@@ -191,6 +195,7 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
     const gameAreasElement = getBy('#game-area');
 
     const submitterName =  e.submitter.name;
+    const allowDuplicateGuesses = ui.allowDuplicateGuesses;
 
     if (submitterName === 'play-game') {
         let title = titleElement.value;
@@ -217,7 +222,7 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
         gameAreasElement.classList.remove('hidden');
 
 
-        // let easyGame = new Game({minRange, maxRange, maxAttempts});
+        game = new Game({minRange, maxRange, maxAttempts, allowDuplicateGuesses});
         // easyGame.play()
     } else {
         titleElement.value = '';
@@ -229,5 +234,22 @@ document.getElementById('settings-form').addEventListener('submit', (e) => {
         gameAreasElement.classList.add('hidden');
 
         console.clear()
+    }
+})
+
+
+//get the guess and 
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'submit-guess') {
+        const guess = ui.getGuess();
+
+        if (isNaN(guess) || guess < game.minRange || guess > game.maxRange) {
+            ui.showFeedback(`Invalid input. Please enter a number between ${game.minRange} and ${game.maxRange}.`);
+            return;
+        }
+        
+        const result = game.checkGuess(guess);
+
+        ui.showFeedback(`${guess} is ${result}`);
     }
 })
