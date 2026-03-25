@@ -1,4 +1,4 @@
-//organising app with modules
+//serializing and deserializing objects (JSON)
 
 import { ui, init } from "./ui.js"
 
@@ -15,6 +15,11 @@ init()
 
     document.addEventListener('game:guess', (e) => {
         const {guess, result, remainingAttempts} = e.detail
+
+        //convert object into a JSON string
+        const json = JSON.stringify(e.detail)
+
+        const obj = JSON.parse(json)
 
         ui.updateHistory(`${guess} is ${result}`);
         ui.showFeedback(`You have ${remainingAttempts} remaining attempts`)
