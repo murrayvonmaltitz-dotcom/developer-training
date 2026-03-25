@@ -1,3 +1,5 @@
+const gameStateKey = 'game-state';
+
 export default class Game {
     // # makes the variable private, only accessable within the class
     #minRange;
@@ -14,6 +16,11 @@ export default class Game {
         this.#allowDuplicateGuesses = allowDuplicateGuesses
         this.history = [];
         this.#secretNumber = Math.floor(Math.random() * (this.#maxRange - this.#minRange + 1)) + this.#minRange;
+    }
+
+    static hasSavedGame() {
+        //if key doesn't exist returns null
+        return localStorage.getItem(gameStateKey);
     }
 
     //checks if the value is a number and within the specified range, if not throws an error with a message, returns the number if valid
@@ -34,6 +41,16 @@ export default class Game {
         }
 
         return num;
+    }
+
+    static loadSavedGame() {
+        const state = JSON.parse(localStorage.getItem(gameStateKey))
+        let game = new Game(state)
+
+        game.#secretNumber = state.secretNumber
+        game.history = state.history
+
+        return game
     }
 
     checkGuess(guess) {
@@ -61,14 +78,25 @@ export default class Game {
             }
         }))
 
-
         if (isCorrect || isLastAttempt) {
             document.dispatchEvent(new CustomEvent('game:over', {
                 detail: {
                     secretNumber: this.#secretNumber
                 }
             }));
+            
+            localStorage.removeItem(gameStateKey)
+            return 
         }
+
+        localStorage.setItem(gameStateKey, JSON.stringify({
+            minRange: this.#minRange,
+            maxRange: this.#maxRange,
+            maxAttempts: this.#maxAttempts,
+            allowDuplicateGuesses: this.#allowDuplicateGuesses,
+            secretNumber: this.#secretNumber,
+            history: this.history
+        }))
 
     }
 

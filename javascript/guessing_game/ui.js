@@ -110,6 +110,18 @@ export const ui = {
 
 export function init() {
 
+    if (Game.hasSavedGame()) {
+        if (confirm("Do you wnat to continue the saved game?")) {
+            game = Game.loadSavedGame();
+
+            ui.gameArea.show()
+            ui.gameArea.disabled = false
+            ui.settings.disabled = true
+
+            game.history.forEach(value => ui.updateHistory(value))
+        }
+    } 
+
     document.getElementById('settings-form').addEventListener('submit', (e) => {
         e.preventDefault()
 
