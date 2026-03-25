@@ -106,27 +106,25 @@ export const ui = {
     },
 }
 
+export async function init() {
 
+    const savedGame = await Game.loadSavedGame();
 
-export function init() {
-
-    Game.loadSavedGame().then((savedGame) => {
-
-        if (!savedGame) {
-            return
+        if (savedGame) {
+           if (confirm("Do you wnat to continue the saved game?")) {    
+                game = savedGame;
+                
+                ui.gameArea.show()
+                ui.gameArea.disabled = false
+                ui.settings.disabled = true
+                
+                game.history.forEach(value => ui.updateHistory(value))
+            }
         } 
 
-        if (confirm("Do you wnat to continue the saved game?")) {    
-            game = savedGame;
-            
-            ui.gameArea.show()
-            ui.gameArea.disabled = false
-            ui.settings.disabled = true
-            
-            game.history.forEach(value => ui.updateHistory(value))
-        }
+       
 
-    }).catch(error => console.error(error));
+    
 
     document.getElementById('settings-form').addEventListener('submit', (e) => {
         e.preventDefault()

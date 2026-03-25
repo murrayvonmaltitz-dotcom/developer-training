@@ -1,9 +1,9 @@
-//promises
+//async await
 
 import { ui, init } from "./ui.js"
 
 //setups all dom event listeners
-init()
+await init()
 
     document.addEventListener('game:over', (e) => {
         const secretNumber = e.detail.secretNumber;
@@ -20,7 +20,7 @@ init()
         ui.showFeedback(`You have ${remainingAttempts} remaining attempts`)
     }) 
 
-    document.addEventListener("ui:submit-guess", (e) => {
+    document.addEventListener("ui:submit-guess", async (e) => {
         
         const {guess, game} = e.detail
 
@@ -30,7 +30,7 @@ init()
             return;
         }
         
-        game.checkGuess(guess);
+        await game.checkGuess(guess);
 
         ui.resetGuess();
     })

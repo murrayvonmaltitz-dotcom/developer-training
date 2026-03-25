@@ -20,10 +20,6 @@ export default class Game {
         this.#secretNumber = Math.floor(Math.random() * (this.#maxRange - this.#minRange + 1)) + this.#minRange;
     }
 
-    static hasSavedGame() {
-        return getGameState()
-    }
-
     //checks if the value is a number and within the specified range, if not throws an error with a message, returns the number if valid
     //static methods can be called on the class itself eg Game.initRangeValues()
     static initRangeValues({value, lowerBound, upperBound = 0} = {}) {
@@ -44,26 +40,22 @@ export default class Game {
         return num;
     }
 
-    static loadSavedGame() {
-        //.then.catch because it now returns a promise
-        return getGameState().then(state => {
-            if (!state) {
-                return null
-            }
-            
-            let game = new Game(state)
+    static async loadSavedGame() {
+        const state = await getGameState()
 
-            game.#secretNumber = state.secretNumber
-            game.history = state.history
+        if (!state) {
+            return null
+        }
+        
+        let game = new Game(state)
 
-            return game
-        }).catch((error) => {
-            console.log(error)
-        })
-       
+        game.#secretNumber = state.secretNumber
+        game.history = state.history
+
+        return game
     }
 
-    checkGuess(guess) {
+    async checkGuess(guess) {
 
         if (this.maxAttempts === this.history.length) {
             return //todo throw error?
@@ -95,11 +87,11 @@ export default class Game {
                 }
             }));
             
-            clearGameState()
+            await clearGameState()
             return 
         }
 
-       saveGameState({
+        await saveGameState({
             minRange: this.#minRange,
             maxRange: this.#maxRange,
             maxAttempts: this.#maxAttempts,
