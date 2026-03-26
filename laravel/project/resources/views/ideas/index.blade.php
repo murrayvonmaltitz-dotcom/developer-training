@@ -19,7 +19,7 @@
             <h2 class="font-bold">Your Ideas</h2>
             <ul class="mt-6">
                 @foreach($ideas as $idea) 
-                    <li class="text-sm">{{ $idea->description }}</li>
+                    <a href="/ideas/{{ $idea->id }}/edit" class="text-sm">{{ $idea->description }}</a>
                 @endforeach
             </ul>
         </div>
