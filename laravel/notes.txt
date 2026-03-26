@@ -32,4 +32,9 @@ populates controller with the seven restful actions :)
 //makes a new request class (used for validation rules)
 php artisan make:requests
 
+//add to migration file to make a idea to user relation with deletion on user delete
+$table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+refresh table
+
+
 
