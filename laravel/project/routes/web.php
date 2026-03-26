@@ -1,72 +1,14 @@
 <?php
 
+use App\Http\Controllers\IdeaController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Idea;
 
-//index
-Route::get('/ideas', function () {
-    //$ideas = Idea::where('state', 'pending')->get(); //ideas where state = pending
-    // $ideas = Idea::when(request('state'), function ($query, $state) {
-        //     $query->where('state', $state); 
-        // })
-        // ->get(); //pulls state into $state from query string eg ?state=pending
-        
-    $ideas = Idea::all(); //all fields 
-    
-    return view('ideas.index', [
-        'ideas' => $ideas
-    ]);
-});
-
-//create 
-Route::get('/ideas/create', function () {
-    return view('ideas.create');
-});
-
-//store
-Route::post('/ideas', function () {
-    //created_at and updated_at auto fills with eloquent 
-    Idea::create([
-        'description' => request('description'),
-        'state' => 'pending'
-    ]);
-
-    return redirect('/ideas');
-});
-
-//show
-//single idea from id passing $id into the function
-//can pass a model type into function to access more directly
-Route::get('/ideas/{idea}', function (Idea $idea) {
-    //find single idea by idea
-    //$idea = Idea::find($id);
-
-    // $idea = Idea::findOrFail($id); //if id not found then display 404 page when id is passed through route function
-    return view('ideas.show', [
-        'idea' => $idea
-    ]);
-});
-
-//edit show fields to edit 
-Route::get('/ideas/{idea}/edit', function (Idea $idea) {
-    return view('ideas.edit', [
-        'idea' => $idea
-    ]);
-});
-
-Route::patch('/ideas/{idea}', function (Idea $idea) {
-    //update description from request from form in edit view, name of field must be description
-    $idea->update([
-        'description' => request("description")
-    ]);
-
-    return redirect("ideas/{$idea->id}");
-});
-
-//destroy
-Route::delete('/ideas/{idea}', function (Idea $idea) {
-    $idea->delete();
-
-    return redirect('/ideas');
-});
+Route::get('/ideas', [IdeaController::class, 'index']);
+Route::get('/ideas/create', [IdeaController::class, 'create']);
+Route::post('/ideas', [IdeaController::class, 'store']);
+Route::get('/ideas/{idea}', [IdeaController::class, 'show']);
+Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit']);
+Route::patch('/ideas/{idea}', [IdeaController::class, 'update']);
+Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy']);
 

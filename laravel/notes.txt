@@ -17,6 +17,16 @@ php artisan migrate:resfresh
 php artisan make:model
 eg Idea (singular)
 
+//make a controller class
+php artisan make:controller
+eg IdeaController
+type of controller "resource"
+link corrisponding model (name from above model creation)
+populates controller with the seven restful actions :)
+
+
 //laravel specific built in functions start with @
 @csrf adds a token to requests for security
 @method('PATCH') changes routes type on submitted forms
+
+
