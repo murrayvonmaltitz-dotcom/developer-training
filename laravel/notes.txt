@@ -29,4 +29,7 @@ populates controller with the seven restful actions :)
 @csrf adds a token to requests for security
 @method('PATCH') changes routes type on submitted forms
 
+//makes a new request class (used for validation rules)
+php artisan make:requests
+
 
