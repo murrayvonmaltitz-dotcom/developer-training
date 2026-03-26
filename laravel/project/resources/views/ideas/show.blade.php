@@ -1,0 +1,10 @@
+ <x-layout title="ideas"> 
+
+        <div class="mt-6 text-white">
+            <h2 class="font-bold">Your Idea</h2>
+            <div>
+                {{ $idea->description }}
+            </div>
+        </div>
+
+</x-layout>
