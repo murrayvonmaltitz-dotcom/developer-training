@@ -29,16 +29,6 @@ Route::get('/ideas/{idea}', function (Idea $idea) {
     ]);
 });
 
-Route::post('/ideas', function () {
-    //created_at and updated_at auto fills with eloquent 
-    Idea::create([
-        'description' => request('description'),
-        'state' => 'pending'
-    ]);
-
-    return redirect('/');
-});
-
 //edit show fields to edit 
 Route::get('/ideas/{idea}/edit', function (Idea $idea) {
     return view('ideas.edit', [
@@ -55,11 +45,21 @@ Route::patch('/ideas/{idea}', function (Idea $idea) {
     return redirect("ideas/{$idea->id}");
 });
 
-
-
-Route::get('/delete-ideas', function() {
-    //!!deletes everything in table
-    Idea::truncate();
+//store
+Route::post('/ideas', function () {
+    //created_at and updated_at auto fills with eloquent 
+    Idea::create([
+        'description' => request('description'),
+        'state' => 'pending'
+    ]);
 
     return redirect('/ideas');
 });
+
+//destroy
+Route::delete('/ideas{idea}', function (Idea $idea) {
+    $idea->delete();
+
+    return redirect('/ideas');
+});
+
