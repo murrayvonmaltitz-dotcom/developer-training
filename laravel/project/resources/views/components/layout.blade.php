@@ -19,7 +19,7 @@
 </head>
 <body class="">
 <x-nav />
-    <main class="max-w-3xl mx-auto">
+    <main class="max-w-3xl mx-auto mt-6">
         {{ $slot }}
     </main>
 </body>
