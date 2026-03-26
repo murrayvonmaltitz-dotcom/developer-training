@@ -1,0 +1,18 @@
+//start laravel local server 
+php artisan serve
+
+//make migration files
+php artisan make:migration
+eg
+add_state_to_migration_table
+
+//run migration after new migration files are made
+php artisan migrate
+
+//rerun database migrations before deployment after edits to migration files, after - make new migration
+//!!!data is lost
+php artisan migrate:resfresh
+
+//make a eloquient mode
+php artisan make:model
+eg Idea (singular)
