@@ -57,7 +57,7 @@ Route::post('/ideas', function () {
 });
 
 //destroy
-Route::delete('/ideas{idea}', function (Idea $idea) {
+Route::delete('/ideas/{idea}', function (Idea $idea) {
     $idea->delete();
 
     return redirect('/ideas');
