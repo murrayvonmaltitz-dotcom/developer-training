@@ -16,3 +16,7 @@ php artisan migrate:resfresh
 //make a eloquient mode
 php artisan make:model
 eg Idea (singular)
+
+//laravel specific built in functions start with @
+@csrf adds a token to requests for security
+@method('PATCH') changes routes type on submitted forms
