@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Idea;
 
+//index
 Route::get('/ideas', function () {
     //$ideas = Idea::where('state', 'pending')->get(); //ideas where state = pending
     // $ideas = Idea::when(request('state'), function ($query, $state) {
@@ -17,6 +18,23 @@ Route::get('/ideas', function () {
     ]);
 });
 
+//create 
+Route::get('/ideas/create', function () {
+    return view('ideas.create');
+});
+
+//store
+Route::post('/ideas', function () {
+    //created_at and updated_at auto fills with eloquent 
+    Idea::create([
+        'description' => request('description'),
+        'state' => 'pending'
+    ]);
+
+    return redirect('/ideas');
+});
+
+//show
 //single idea from id passing $id into the function
 //can pass a model type into function to access more directly
 Route::get('/ideas/{idea}', function (Idea $idea) {
@@ -43,17 +61,6 @@ Route::patch('/ideas/{idea}', function (Idea $idea) {
     ]);
 
     return redirect("ideas/{$idea->id}");
-});
-
-//store
-Route::post('/ideas', function () {
-    //created_at and updated_at auto fills with eloquent 
-    Idea::create([
-        'description' => request('description'),
-        'state' => 'pending'
-    ]);
-
-    return redirect('/ideas');
 });
 
 //destroy
