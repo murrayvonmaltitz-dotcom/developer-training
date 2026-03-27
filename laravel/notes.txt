@@ -49,3 +49,17 @@ public function user() {
 }
 
 //above allows me to do $idea->user in php artisan 
+
+//Gate service provider allows us to set rules to determine access to routes in the AppServiceProvider.php file example 
+//return true to allow access 
+//used in conjuction with @can('view-admin) to view/show html sections 
+   /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        Gate::define('view-admin', function (User $user) {
+            return true;
+        });
+    }
+

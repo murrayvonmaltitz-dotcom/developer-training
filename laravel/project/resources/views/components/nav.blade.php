@@ -7,8 +7,11 @@
       <ul
         tabindex="-1"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-            <li><a href="/ideas">Home</a></li>
-            <li><a href="/ideas/create">New Idea</a></li>
+          <li><a href="/ideas">Home</a></li>
+          <li><a href="/ideas/create">New Idea</a></li>
+          @can('view-admin')
+            <li><a href="/admin">Admin</a></li>
+          @endcan
       </ul>
     </div>
     <a class="btn btn-ghost text-xl">Idea</a>
@@ -17,6 +20,9 @@
     <ul class="menu menu-horizontal px-1">
         <li><a href="/ideas">Home</a></li>
         <li><a href="/ideas/create">New Idea</a></li>
+        @can('view-admin')
+          <li><a href="/admin">Admin</a></li>
+        @endcan
     </ul>
   </div>
   <div class="navbar-end space-x-2">
@@ -26,6 +32,7 @@
     <a class="btn btn-secondary" href="/login">Login</a>
   @endguest
 
+  {{-- is user authenticated? (logged in?) --}}
   @auth
     <form method="POST" action="/logout">
       @csrf
