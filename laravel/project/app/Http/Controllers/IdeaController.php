@@ -50,10 +50,10 @@ class IdeaController extends Controller
     //store alternative to above runs request from StoreIdeaRequest which validates
     public function store(IdeaRequest $request)
     {
-        Idea::create([
+        //can now use due to model relations
+        Auth::user()->ideas()->create([
             'description' => request('description'),
             'state' => 'pending',
-            'user_id' => Auth::id()
         ]);
 
     return redirect('/ideas');
