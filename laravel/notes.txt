@@ -105,3 +105,11 @@ used in controller
     {
         return $user->isAdmin();
     }
+
+
+//if want to run app on vite use
+npm run dev AND!!!!  php artisan serve
+edit resources files and include @vite(['resources/css/app.css', 'resources/js/app.js']) in layout
+
+//build for production creates public build directory for upload 
+npm run build 
