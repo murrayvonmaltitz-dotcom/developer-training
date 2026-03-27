@@ -21,8 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        //if no user default returns false
         Gate::define('view-admin', function (User $user) {
-            return false;
+            return true;
         });
     }
 }
