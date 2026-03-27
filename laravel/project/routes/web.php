@@ -31,15 +31,18 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [SessionsController::class, 'store']);
 });
 
-Route::get('/admin', function () {
-    Gate::authorize('view-admin');
 
-    return 'private admin area only';
-});
 
-//alternative to above
-Route::get('/admin', function () {
-    return 'private admin area only';
-})->can('view-admin');
+//not needed just for learning
+// Route::get('/admin', function () {
+//     Gate::authorize('view-admin');
+
+//     return 'private admin area only';
+// });
+
+// //alternative to above
+// Route::get('/admin', function () {
+//     return 'private admin area only';
+// })->can('view-admin');
 
 

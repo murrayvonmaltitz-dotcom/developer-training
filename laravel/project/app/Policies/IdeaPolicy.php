@@ -13,6 +13,7 @@ class IdeaPolicy
      */
     public function update(User $user, Idea $idea): bool
     {
-        return false;
+        //check if logged in user id matches that to the user id on the current idea
+        return $user->id === $idea->user_id;
     }
 }
