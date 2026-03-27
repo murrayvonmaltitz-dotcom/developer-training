@@ -68,3 +68,9 @@ Route::get('/admin', function () {
     return 'private admin area only';
 })->can('view-admin');
 
+//alternative to run within route function 
+
+Route::get('/admin', function () {
+    Gate::authorize('view-admin')
+    return 'private admin area only'
+})

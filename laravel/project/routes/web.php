@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\SessionsController;
 use App\Http\Controllers\IdeaController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Idea;
+use Illuminate\Support\Facades\Gate;
 
 Route::get('/', function () {
     return 'placeholder for homepage';
@@ -31,6 +32,14 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::get('/admin', function () {
+    Gate::authorize('view-admin');
+
+    return 'private admin area only';
+});
+
+//alternative to above
+Route::get('/admin', function () {
     return 'private admin area only';
 })->can('view-admin');
+
 
