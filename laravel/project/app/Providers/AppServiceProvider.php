@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //if no user default returns false
+        //if no user default returns false if user is not optional (?User)
         Gate::define('view-admin', function (User $user) {
             return true;
         });
