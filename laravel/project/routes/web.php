@@ -32,5 +32,5 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/admin', function () {
     return 'private admin area only';
-});
+})->can('view-admin');
 

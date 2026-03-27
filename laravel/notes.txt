@@ -63,3 +63,8 @@ public function user() {
         });
     }
 
+//above can also protect at route level in web.php 
+Route::get('/admin', function () {
+    return 'private admin area only';
+})->can('view-admin');
+
