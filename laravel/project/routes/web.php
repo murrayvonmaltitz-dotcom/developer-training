@@ -6,6 +6,10 @@ use App\Http\Controllers\IdeaController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Idea;
 
+Route::get('/', function () {
+    return 'placeholder for homepage';
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/ideas', [IdeaController::class, 'index'])->middleware('auth');
     Route::get('/ideas/create', [IdeaController::class, 'create']);

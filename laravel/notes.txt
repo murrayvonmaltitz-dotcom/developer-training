@@ -36,5 +36,7 @@ php artisan make:requests
 $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
 refresh table
 
+//can add specific auth and guest redirects from bootstrap/app file
+
 
 
