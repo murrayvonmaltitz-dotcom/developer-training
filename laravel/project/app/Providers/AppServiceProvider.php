@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,7 +24,11 @@ class AppServiceProvider extends ServiceProvider
     {
         //if no user default returns false if user is not optional (?User)
         Gate::define('view-admin', function (User $user) {
-            return true;
+            if ($user->id === 2) {
+                return Response::allow();
+            }
+
+            return Response::denyWithStatus(404);
         });
     }
 }
