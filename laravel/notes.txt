@@ -38,5 +38,7 @@ refresh table
 
 //can add specific auth and guest redirects from bootstrap/app file
 
-
+//create a dummy user
+php artisan tinker
+App\Models\User::factory()->create()
 
