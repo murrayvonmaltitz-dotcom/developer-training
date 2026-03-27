@@ -74,3 +74,10 @@ Route::get('/admin', function () {
     Gate::authorize('view-admin')
     return 'private admin area only'
 })
+
+
+//policies are the controller equivilent to gates. they allow us to assign authorisation specifically for a model
+//create with php artisan make:policy
+//eg name IdeaPolicy
+corrisponding model: Idea
+found under app/policies
