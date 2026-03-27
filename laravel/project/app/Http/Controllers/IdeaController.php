@@ -28,6 +28,8 @@ class IdeaController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Idea::class);
+
         return view('ideas.create');
     }
 

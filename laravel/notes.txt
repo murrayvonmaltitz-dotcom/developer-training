@@ -98,3 +98,10 @@ used in controller
             'idea' => $idea
         ]);
     }
+
+//if no idea is present use Gate::authorize('update', Idea::class)
+//in policy
+     public function create(User $user): bool
+    {
+        return $user->isAdmin();
+    }
