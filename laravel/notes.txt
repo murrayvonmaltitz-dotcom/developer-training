@@ -42,3 +42,8 @@ refresh table
 php artisan tinker
 App\Models\User::factory()->create()
 
+//can define model (database) mapping in models 
+//in ideas 
+public function user() {
+    return $this->belongsTo(User::class);
+}
