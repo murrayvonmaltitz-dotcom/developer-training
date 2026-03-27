@@ -24,11 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //if no user default returns false if user is not optional (?User)
         Gate::define('view-admin', function (User $user) {
-            if ($user->id === 2) {
-                return Response::allow();
-            }
-
-            return Response::denyWithStatus(404);
+            return $user->isAdmin() ? Response::allow() : Response::denyWithStatus(404);
         });
     }
 }
