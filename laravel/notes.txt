@@ -81,3 +81,20 @@ Route::get('/admin', function () {
 //eg name IdeaPolicy
 corrisponding model: Idea
 found under app/policies
+
+example 
+    public function update(User $user, Idea $idea): bool
+    {
+        //check if logged in user id matches that to the user id on the current idea
+        return $user->id === $idea->user_id;
+    }
+used in controller 
+
+   public function show(Idea $idea)
+    {
+        Gate::authorize('update', $idea);
+
+        return view('ideas.show', [
+            'idea' => $idea
+        ]);
+    }

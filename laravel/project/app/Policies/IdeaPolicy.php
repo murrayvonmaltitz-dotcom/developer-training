@@ -14,6 +14,9 @@ class IdeaPolicy
     public function update(User $user, Idea $idea): bool
     {
         //check if logged in user id matches that to the user id on the current idea
-        return $user->id === $idea->user_id;
+        //return $user->id === $idea->user_id;
+        
+        //eloquent equivilent based on my model relationships
+        return $user->is($idea->user);
     }
 }
