@@ -43,7 +43,9 @@ php artisan tinker
 App\Models\User::factory()->create()
 
 //can define model (database) mapping in models 
-//in ideas 
+//in ideas model
 public function user() {
     return $this->belongsTo(User::class);
 }
+
+//above allows me to do $idea->user in php artisan 
