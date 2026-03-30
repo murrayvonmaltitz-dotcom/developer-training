@@ -4,3 +4,44 @@ rector used to follow preset dev rules //www.getrector.com mostly type setting/c
 laravel specific rector on github "rector-laravel" with pasted in rules
 
 run with vendor/bin/rector
+
+code rabbit, gives code reviews
+
+laravel boost 
+composer require laravel/boost --dev
+php artisan boost:install
+
+//design database models
+php artisan make:models 
+can add supporting classes here as well 
+
+edit tables in migration
+can store json objects in db
+php artisan migrations
+
+Model::unguard in appservice provider
+
+php artisan create enum 
+creates enum class
+
+//casts allows us to make rules on db values eg links as an array and status as enum
+
+protected $casts = [
+       'links' => AsArrayObject::class,
+       'status' => IdeaStatus::class,
+    ];
+
+
+can call methods on enums to give custom status messages
+
+factory classes help us input dummy data
+//in tinker
+App\Models\Idea::factory()->make();
+because idea $attributes has a status default it will be added to class data 
+
+//create test 
+php artisan make:test
+//run test 
+pest tests/Unit/IdeaTest.php (filepath to unit test)
+or 
+./vendor/bin/pest tests/Unit/IdeaTest.php (filepath to unit test)
