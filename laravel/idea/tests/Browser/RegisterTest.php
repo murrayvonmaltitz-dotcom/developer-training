@@ -11,11 +11,10 @@ it('registers a user', function () {
         ->fill('password', 'password')
         ->click('Create Account')
         ->assertPathIs('/');
-    
+
     $this->assertAuthenticated();
 
     expect(Auth::user())->toMatchArray([
-        "name" => "John Doe",
-        "name" => "John@example.com",
+        'name' => 'John@example.com',
     ]);
 });
