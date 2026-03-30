@@ -1,0 +1,6 @@
+php pint used to follow format rules, can setup in compose.json
+
+rector used to follow preset dev rules //www.getrector.com mostly type setting/checking
+laravel specific rector on github "rector-laravel" with pasted in rules
+
+run with vendor/bin/rector
