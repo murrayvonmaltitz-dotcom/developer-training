@@ -108,8 +108,61 @@ used in controller
 
 
 //if want to run app on vite use
-npm run dev AND!!!!  php artisan serve
+npm run dev 
+!!!!AND!!!!  
+php artisan serve
 edit resources files and include @vite(['resources/css/app.css', 'resources/js/app.js']) in layout
 
 //build for production creates public build directory for upload 
 npm run build 
+
+//create notifications table
+php artisan make:notifications-table
+php artisan migrate
+
+//make notifications
+php artisan make:notification
+eg name IdeaPublished
+markdown view - no
+in IdeaPublished constructor remember to pass Idea $idea to access it 
+
+//can be an email or database notification
+
+//view in tinker
+App\Models\User::first()->notifications;
+
+send notification in tinker
+$john->notify(New App\Notifications\IdeaPublished(App\Models\Idea::latest()->first()));
+
+in developent emails sent are saved in project/storage/logs, setting are changed in .env file 
+example .env for mailpit (can be opened from terminal: mailpit)
+MAIL_MAILER=smtp
+MAIL_SCHEME=null
+MAIL_HOST=127.0.0.1
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+//logger - stores values in storage/logs
+
+//queue vs job vs worker
+//worker - a process that takes a job from the queue and works on it
+//job - a task that needs to be performed
+//queue - the container that houses all jobs that need to be worked on 
+
+//anything that needs to be processed behind the scenes such as emails should be queued, improves response time for user
+
+//add items to queue 
+class IdeaPublished extends Notification implements ShouldQueue
+
+//create a job 
+php artisan make:job
+eg name: UpdateIdeaStatistics
+
+//dispatch jobs in tinker - puts on queue but does not run off the queue (needs a worker)
+App\Jobs\UpdateIdeaStatistics::dispatch()
+
+//run a worker to run the queue jobs
+php artisan queue:work

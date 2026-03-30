@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\IdeaRequest;
-use App\Http\Requests\StoreIdeaRequest;
 use App\Models\Idea;
-use Illuminate\Http\Request;
+use App\Notifications\IdeaPublished;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -36,28 +35,14 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         "description" => ['required', 'min:10']
-    //     ]);
-    
-    //     Idea::create([
-    //         'description' => request('description'),
-    //         'state' => 'pending'
-    //     ]);
-
-    // return redirect('/ideas');
-    // }
-
-    //store alternative to above runs request from StoreIdeaRequest which validates
     public function store(IdeaRequest $request)
     {
-        //can now use due to model relations
-        Auth::user()->ideas()->create([
+        $idea = Auth::user()->ideas()->create([
             'description' => request('description'),
             'state' => 'pending',
         ]);
+
+        Auth::user()->notify(new IdeaPublished($idea));
 
     return redirect('/ideas');
     }
