@@ -35,7 +35,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function Ideas(): HasMany {
+    public function Ideas(): HasMany
+    {
         return $this->hasMany(Idea::class);
     }
 }
