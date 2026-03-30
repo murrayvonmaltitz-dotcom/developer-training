@@ -45,3 +45,10 @@ php artisan make:test
 pest tests/Unit/IdeaTest.php (filepath to unit test)
 or 
 ./vendor/bin/pest tests/Unit/IdeaTest.php (filepath to unit test)
+
+alpinejs
+//modern day jquery
+npm install alpinejs
+add to bootstrap.js 
+window.Alpine = Alpine
+Alpine.start()

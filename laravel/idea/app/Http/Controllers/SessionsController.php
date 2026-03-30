@@ -29,7 +29,7 @@ class SessionsController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended()->with('success', 'You are now logge in!');
+        return redirect()->intended()->with('success', 'You are now logged in!');
     }
 
     public function destroy()
