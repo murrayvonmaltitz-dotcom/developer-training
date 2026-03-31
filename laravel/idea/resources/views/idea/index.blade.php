@@ -57,7 +57,9 @@
         x-data="{
           status: 'pending',
           newLink: '',
-          links: []
+          links: [],
+          newStep: '',
+          steps: []
         }" 
         method="POST" 
         action="{{ route('idea.store') }}"
@@ -101,6 +103,46 @@
 
           <div>
             <fieldset class="space-y-3">
+              <legend class="label">Actionable Steps</legend>
+              
+                <template x-for="(step, index) in steps" key="step">
+                  <div class="flex gap-x-2 items-center">
+                    <input name="steps[]" x-model="step" class="input">
+
+                    <button
+                      type="button"
+                      aria-label="Remove step"
+                      @click="steps.splice(index, 1)">
+
+                      <x-icons.close />
+                    </button>
+                  </div>
+                </template>
+
+                <div class="flex gap-x-2 items-center">
+                  <input 
+                    x-model="newStep"
+                    type="url"
+                    id="new-step"
+                    placeholder="What needs to be done"
+                    class="input flex-1"
+                    spellcheck=false
+                  >
+                  <button 
+                    type="button" 
+                    @click="steps.push(newStep.trim()); newStep = ''"
+                    data-test="submit-new-step-button"
+                    :disabled="newStep.trim().length === 0">
+                    <x-icons.close class="rotate-45" />
+                  </button>
+
+                </div>
+            </fieldset>
+
+          </div>
+
+          <div>
+            <fieldset class="space-y-3">
               <legend class="label">Links</legend>
               
                 <template x-for="(link, index) in links" key="link">
@@ -130,6 +172,7 @@
                   <button 
                     type="button" 
                     @click="links.push(newLink.trim()); newLink = ''"
+                    data-test="submit-new-link-button"
                     :disabled="newLink.trim().length === 0">
                     <x-icons.close class="rotate-45" />
                   </button>
