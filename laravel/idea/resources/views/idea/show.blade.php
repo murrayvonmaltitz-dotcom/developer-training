@@ -30,7 +30,7 @@
             <div class="text-muted-foreground text-sm">{{ $idea->created_at->diffForHumans() }}</div>
         </div>
 
-        <div class="grid md:grid-cols-1 gap-6">
+        <div class="grid md:grid-cols-1">
             <x-card href="#" class="mt-6">
                 <div class="text-foreground max-w-none cursor-pointer">{{ $idea->description }}</div>
             </x-card>
