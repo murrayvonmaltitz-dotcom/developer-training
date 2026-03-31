@@ -63,6 +63,7 @@
         }" 
         method="POST" 
         action="{{ route('idea.store') }}"
+        enctype="multipart/form-data"
       >
         @csrf
         <div class="space-y-6">
@@ -100,6 +101,12 @@
             placeholder="Describe your idea..."
             autofocus
           />
+
+          <div class="space-y-2">
+            <label for="image" class="label">Featured image</label>
+            <input type="file" name="image" accept="image/*">
+            <x-form.error class="error" name="image"/>
+          </div>
 
           <div>
             <fieldset class="space-y-3">

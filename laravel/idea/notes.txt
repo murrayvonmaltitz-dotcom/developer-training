@@ -52,3 +52,7 @@ npm install alpinejs
 add to bootstrap.js 
 window.Alpine = Alpine
 Alpine.start()
+
+
+//creates a link to the storage for access. public storage link has been connected
+php artisan storage:link
