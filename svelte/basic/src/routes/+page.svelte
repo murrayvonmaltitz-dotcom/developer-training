@@ -1,19 +1,16 @@
 <script>
-	import PackageInfo from '../components/PackageInfo.svelte';
+	let count = $state(0);
 
-	const pkg = {
-		name: 'svelte',
-		version: 5,
-		description: 'blazing fast',
-		website: 'https://svelte.dev'
-	};
+	function increment() {
+		count += 1;
+	}
 </script>
 
-<PackageInfo {...pkg} />
+<button onclick={increment}>
+	Clicked {count}
+	{count === 1 ? 'time' : 'times'}
+</button>
 
-<!-- <PackageInfo
-	version={pkg.version}
-	description={pkg.description}
-	website={pkg.website}
-/> -->
-
+{#if count > 10}
+    <p>{count} is greater than 10</p>
+{/if}

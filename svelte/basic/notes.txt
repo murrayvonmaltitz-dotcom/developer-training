@@ -105,3 +105,9 @@ eg
 <script>
 	let { name, version, description, website } = $props();
 </script>
+
+
+//can use logic (if) to display html/svelte elements
+{#if count > 10}
+    <p>{count} is greater than 10</p>
+{/if}
