@@ -6,29 +6,27 @@
 <FilteredList
 	data={colors}
 	field="name"
-    {header}
-    {row}
-></FilteredList>
+>
+    <header>
+        <span class="color"></span>
+        <span class="name">name</span>
+        <span class="hex">hex</span>
+        <span class="rgb">rgb</span>
+        <span class="hsl">hsl</span>
+    </header>
 
-{#snippet header()}
-	<header>
-		<span class="color"></span>
-		<span class="name">name</span>
-		<span class="hex">hex</span>
-		<span class="rgb">rgb</span>
-		<span class="hsl">hsl</span>
-	</header>
-{/snippet}
+    {#snippet row(d)}
+        <div class="row">
+            <span class="color" style="background-color: {d.hex}"></span>
+            <span class="name">{d.name}</span>
+            <span class="hex">{d.hex}</span>
+            <span class="rgb">{d.rgb}</span>
+            <span class="hsl">{d.hsl}</span>
+        </div>
+    {/snippet}
+</FilteredList>
 
-{#snippet row(d)}
-	<div class="row">
-		<span class="color" style="background-color: {d.hex}"></span>
-		<span class="name">{d.name}</span>
-		<span class="hex">{d.hex}</span>
-		<span class="rgb">{d.rgb}</span>
-		<span class="hsl">{d.hsl}</span>
-	</div>
-{/snippet}
+
 
 <style>
 	header, .row {

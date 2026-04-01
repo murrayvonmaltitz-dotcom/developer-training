@@ -1,5 +1,5 @@
 <script>
-	let { data, field, header, row } = $props();
+	let { data, field, header, children, row } = $props();
 
 	let search = $state('');
 
@@ -17,7 +17,7 @@
 	</label>
 
 	<div class="header">
-		{@render header()}
+		{@render children()}
 	</div>
 
 	<div class="content">

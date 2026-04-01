@@ -79,3 +79,6 @@ consult docs if need more info
 
 //we can pass snippets to components as props
 https://svelte.dev/tutorial/svelte/passing-snippets
+
+//implicet snipper blocks can be passed in as "children" to a component <>children</>
+if no parameters no block tags are needed
