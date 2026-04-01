@@ -1,22 +1,55 @@
 <script>
-	let yes = $state(false);
+	let questions = [
+		{
+			id: 1,
+			text: `Where did you go to school?`
+		},
+		{
+			id: 2,
+			text: `What is your mother's name?`
+		},
+		{
+			id: 3,
+			text: `What is another personal fact that an attacker could easily find with Google?`
+		}
+	];
+
+	let selected = $state();
+
+	let answer = $state('');
+
+	function handleSubmit(e) {
+		e.preventDefault();
+
+		alert(
+			`answered question ${selected.id} (${selected.text}) with "${answer}"`
+		);
+	}
 </script>
 
-<label>
-	<input type="checkbox" bind:checked={yes} />
-	Yes! Send me regular email spam
-</label>
+<h2>Insecurity questions</h2>
 
-{#if yes}
-	<p>
-		Thank you. We will bombard your inbox and sell
-		your personal details.
-	</p>
-{:else}
-	<p>
-		You must opt in to continue. If you're not
-		paying, you're the product.
-	</p>
-{/if}
+<form onsubmit={handleSubmit}>
+	<select
+		bind:value={selected}
+		onchange={() => (answer = '')}
+	>
+		{#each questions as question}
+			<option value={question}>
+				{question.text}
+			</option>
+		{/each}
+	</select>
 
-<button disabled={!yes}>Subscribe</button>
+	<input bind:value={answer} />
+
+	<button disabled={!answer} type="submit">
+		Submit
+	</button>
+</form>
+
+<p>
+	selected question {selected
+		? selected.id
+		: '[waiting...]'}
+</p>
