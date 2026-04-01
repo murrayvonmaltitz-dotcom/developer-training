@@ -82,3 +82,6 @@ https://svelte.dev/tutorial/svelte/passing-snippets
 
 //implicet snipper blocks can be passed in as "children" to a component <>children</>
 if no parameters no block tags are needed
+
+//adding motion to user interface can be used with tween
+https://svelte.dev/tutorial/svelte/tweens
