@@ -1,5 +1,7 @@
 <script>
-    import {send, receive} from './transition.js'; 
+    import { flip } from 'svelte/animate'
+	import { send, receive } from './transition.js';
+
 	let { todos, remove } = $props();
 </script>
 
@@ -7,8 +9,9 @@
 	{#each todos as todo (todo.id)}
 		<li
 			class={{ done: todo.done }}
-            in:receive={{ key: todo.id}}
-            out:send={{ key: todo.id}}
+			in:receive={{ key: todo.id }}
+			out:send={{ key: todo.id }}
+            animate:flip={{duration: 200}}
 		>
 			<label>
 				<input type="checkbox" bind:checked={todo.done}/>

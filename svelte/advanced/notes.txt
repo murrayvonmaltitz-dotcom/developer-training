@@ -139,3 +139,6 @@ This is useful in the rare cases that you need to interact with a component prog
 Revisiting our canvas app from a few exercises ago, it would be nice to add a button to clear the screen.
 
 //transitions can be defered sothat they can be coordinated between multiple elements
+
+
+//animate and flip can be used to apply motion to the elements that ARE NOT transitioning
