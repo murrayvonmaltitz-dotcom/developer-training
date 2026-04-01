@@ -1,87 +1,66 @@
 <script>
-	import { scale } from './utils.js';
-	import { poll } from './data.js';
+	const MAX_SIZE = 200;
 
-	let data = $state.raw(poll());
+	class Box {
+		width = $state(0);
+		height = $state(0);
+		area = $derived(this.width * this.height);
 
-	let w = $state(1);
-	let h = $state(1);
-
-	const min = $derived(Math.min(...data) - 5);
-	const max = $derived(Math.max(...data) + 5);
-	const x = $derived(scale([0, data.length], [0, w]));
-	const y = $derived(scale([min, max], [h, 0]));
-
-	const ticks = $derived.by(() => {
-		const result = [];
-		let n = 10 * Math.ceil(min / 10);
-		while (n < max) {
-			result.push(n);
-			n += 10;
+		constructor(width, height) {
+			this.width = width;
+			this.height = height;
 		}
-		return result;
-	});
 
-	$effect(() => {
-		const interval = setInterval(() => {
-			data = poll();
-		}, 200);
+		embiggen(amount) {
+			this.width += amount;
+			this.height += amount;
+		}
+	}
 
-		return () => {
-			clearInterval(interval);
-		};
-	});
+	const box = new Box(100, 100);
 </script>
 
-<div class="outer">
-	<svg width={w} height={h} bind:clientWidth={w} bind:clientHeight={h}>
-		<line y1={h} y2={h} x2={w} />
+<label>
+	<input type="range" bind:value={box.width} min={0} max={MAX_SIZE} />
+	{box.width}
+</label>
 
-		{#each ticks as tick}
-			<g class="tick" transform="translate(0,{y(tick)})">
-				<line x2={w} />
-				<text x={-5}>{tick}</text>
-			</g>
-		{/each}
+<label>
+	<input type="range" bind:value={box.height} min={0} max={MAX_SIZE} />
+	{box.height}
+</label>
 
-		<polyline points={data.map((d, i) => [x(i), y(d)]).join(' ')} />
+<button onclick={() => box.embiggen(10)}>embiggen</button>
 
-		<text x={10} y={10} font-size={36}>$SVLT</text>
-	</svg>
+<hr>
+
+<div
+	class="box"
+	style:width="{box.width}px"
+	style:height="{box.height}px"
+>
+	{box.area}
 </div>
 
 <style>
-	.outer {
-		width: 100%;
-		height: 100%;
-		padding: 2em;
-		box-sizing: border-box;
+	label {
+		display: flex;
+		align-items: center;
 	}
 
-	svg {
-		width: 100%;
-		height: 100%;
-		overflow: visible;
+	hr {
+		margin: 1em 0;
+		border: none;
+		border-bottom: 1px solid #888;
 	}
 
-	polyline {
-		fill: none;
-		stroke: #ff3e00;
-		stroke-width: 2;
-		stroke-linejoin: round;
-		stroke-linecap: round;
-	}
-
-	line {
-		stroke: #aaa;
-	}
-
-	.tick {
-		stroke-dasharray: 2 2;
-
-		text {
-			text-anchor: end;
-			dominant-baseline: middle;
-		}
+	.box {
+		background: radial-gradient(at 25% 25%, hsl(15 100 60), hsl(15 100 50)) ;
+		border-radius: 2px;
+		filter: drop-shadow(0 0 10px hsl(15 100 50 / 0.3));
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
 	}
 </style>

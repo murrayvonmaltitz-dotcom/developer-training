@@ -5,3 +5,31 @@ let data = $state(poll())
 //raw is used to make the object not deeply reactive, 
 state.raw cannot be mutated
 
+//we can make properties of classes reactive
+eg
+	class Box {
+		width = $state(0);
+		height = $state(0);
+		area = 0;
+
+		constructor(width, height) {
+			this.width = width;
+			this.height = height;
+		}
+
+		embiggen(amount) {
+			this.width += amount;
+			this.height += amount;
+		}
+	}
+
+	const box = new Box(100, 100);
+</script>
+
+<label>
+	<input type="range" bind:value={box.width} min={0} max={MAX_SIZE} />
+	{box.width}
+</label>
+
+//in above example it is good to make the area $derived from the states
+area = $derived(this.width * this.height);
