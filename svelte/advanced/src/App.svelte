@@ -1,18 +1,38 @@
-<script>
-import {SvelteDate} from 'svelte/reactivity'
-	let date = new SvelteDate();
 
-	const pad = (n) => n < 10 ? '0' + n : n;
 
-	$effect(() => {
-		const interval = setInterval(() => {
-			date.setTime(Date.now());
-		}, 1000);
+<table>
+	<thead>
+		<tr>
+			<th>emoji</th>
+			<th>description</th>
+			<th>unicode escape sequence</th>
+			<th>html entity</th>
+		</tr>
+	</thead>
 
-		return () => {
-			clearInterval(interval);
-		};
-	});
-</script>
+	<tbody>
+{#snippet monkey(emoji, description)}
+    <tr>
+        <td>{emoji}</td>
+        <td>{description}</td>
+        <td>\u{emoji.charCodeAt(0).toString(16)}\u{emoji.charCodeAt(1).toString(16)}</td>
+        <td>&amp#{emoji.codePointAt(0)}</td>
+    </tr>
+{/snippet}
 
-<p>The time is {date.getHours()}:{pad(date.getMinutes())}:{pad(date.getSeconds())}</p>
+{@render monkey('🙈', 'see no evil')}
+{@render monkey('🙈', 'see no evil 2')}
+
+	</tbody>
+</table>
+
+<style>
+	th, td {
+		padding: 0.5em;
+	}
+
+	td:nth-child(3),
+	td:nth-child(4) {
+		font-family: monospace;
+	}
+</style>
