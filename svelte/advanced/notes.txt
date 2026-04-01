@@ -35,3 +35,25 @@ eg
 area = $derived(this.width * this.height);
 
 //svelte can be used with javascript class getters and setter
+
+//Built in svelte reactive classes
+namely Map, Set, Date, URL and URLSearchParams
+eg date is brought in as a state
+<script>
+import {SvelteDate} from 'svelte/reactivity'
+	let date = new SvelteDate();
+
+	const pad = (n) => n < 10 ? '0' + n : n;
+
+	$effect(() => {
+		const interval = setInterval(() => {
+			date.setTime(Date.now());
+		}, 1000);
+
+		return () => {
+			clearInterval(interval);
+		};
+	});
+</script>
+
+<p>The time is {date.getHours()}:{pad(date.getMinutes())}:{pad(date.getSeconds())}</p>
