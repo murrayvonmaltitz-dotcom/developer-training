@@ -13,4 +13,6 @@
 
 {#if count > 10}
     <p>{count} is greater than 10</p>
+{:else} 
+    <p>{count} is smaller than 10</p>
 {/if}
