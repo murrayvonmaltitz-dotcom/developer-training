@@ -85,3 +85,6 @@ if no parameters no block tags are needed
 
 //adding motion to user interface can be used with tween
 https://svelte.dev/tutorial/svelte/tweens
+
+//alternative to tween is spring 
+https://svelte.dev/tutorial/svelte/springs
