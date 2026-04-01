@@ -1,9 +1,14 @@
+<script lang="ts">
+	import Nested from "../components/Nested.svelte"
+</script>
+
 <p>This is a paragraph.</p>
+<Nested />
 
 <style>
-	p{
-		color: goldenrod;	
-		font-family: 'comic Sans';
-		font-size: 2em
+	p {
+		color: goldenrod;
+		font-family: 'Comic Sans MS', cursive;
+		font-size: 2em;
 	}
 </style>
