@@ -1,0 +1,7 @@
+//can add function calls into states
+let data = $state(poll())
+
+
+//raw is used to make the object not deeply reactive, 
+state.raw cannot be mutated
+
