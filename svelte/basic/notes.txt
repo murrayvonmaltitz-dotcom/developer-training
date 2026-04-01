@@ -210,6 +210,7 @@ eg
 </button>
 
 // bind: can be used when a parent component is not setting props to a child component
+//text
 <script>
 	let name = $state('world');
 </script>
