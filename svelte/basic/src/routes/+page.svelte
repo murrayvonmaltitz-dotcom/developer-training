@@ -1,17 +1,23 @@
 <script>
-	import { roll } from '../utils.js';
+	let m = $state({ x: 0, y: 0 });
 
-	let promise = $state(roll());
+	function onpointermove(event) {
+		m.x = event.clientX;
+		m.y = event.clientY;
+	}
 </script>
 
-<button onclick={() => promise = roll()}>
-	roll the dice
-</button>
+<div {onpointermove} role="presentation">
+	The pointer is at {Math.round(m.x)} x {Math.round(m.y)}
+</div>
 
-{#await promise}
-    <p>...rolling</p>
-{:then number} 
-    <p>You rolled a {number}</p>
-{:catch error}
-    <p style="color:red">{error.message}</p>
-{/await}
+<style>
+	div {
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		padding: 1rem;
+	}
+</style>

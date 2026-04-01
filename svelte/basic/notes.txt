@@ -171,3 +171,11 @@ This makes things faster and gives you more control.
 {:catch error}
     <p style="color:red">{error.message}</p>
 {/await}
+
+//dom event names start with "on"
+
+//Like with any other property where the name matches the value, we can use the short form:
+<div {onpointermove} role="presentation">
+//is the same as
+
+<div onpointermove={onpointermove}>
