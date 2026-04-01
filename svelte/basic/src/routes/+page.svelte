@@ -1,22 +1,12 @@
 <script>
-	let m = $state({ x: 0, y: 0 });
-    
+	import Stepper from '../components/Stepper.svelte';
+
+	let value = $state(0);
 </script>
 
-<div onpointermove={(event) => {
-		m.x = event.clientX;
-		m.y = event.clientY;
-	}} role="presentation">
-	The pointer is at {Math.round(m.x)} x {Math.round(m.y)}
-</div>
+<p>The current value is {value}</p>
 
-<style>
-	div {
-		position: fixed;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		padding: 1rem;
-	}
-</style>
+<Stepper 
+    increment={() => value += 1}
+    decrement={() => value -= 1}
+/>

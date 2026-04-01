@@ -188,3 +188,17 @@ eg
 	}} role="presentation">
 	The pointer is at {Math.round(m.x)} x {Math.round(m.y)}
 </div>
+
+//caputuring bubbles up (input first )
+<div onkeydown={(e) => alert(`<div> ${e.key}`)} role="presentation">
+	<input onkeydown={(e) => alert(`<input> ${e.key}`)} />
+</div>
+
+//bubbles down (div first)
+//capturing handles will default to run first
+<div onkeydowncapture={(e) => alert(`<div> ${e.key}`)} role="presentation">
+	<input onkeydowncapture={(e) => alert(`<input> ${e.key}`)} />
+</div>
+
+
+You can pass event handlers to components like any other prop.
