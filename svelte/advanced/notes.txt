@@ -33,3 +33,5 @@ eg
 
 //in above example it is good to make the area $derived from the states
 area = $derived(this.width * this.height);
+
+//svelte can be used with javascript class getters and setter
