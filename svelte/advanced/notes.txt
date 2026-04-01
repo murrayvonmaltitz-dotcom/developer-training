@@ -88,3 +88,27 @@ https://svelte.dev/tutorial/svelte/tweens
 
 //alternative to tween is spring 
 https://svelte.dev/tutorial/svelte/springs
+
+//Elements with a contenteditable attribute support textContent and innerHTML bindings:
+eg (will display as a p tag not <p> text)
+<script>
+	let html = $state('<p>Write some text!</p>');
+</script>
+<div bind:innerHTML={html} contenteditable></div>
+
+//You can bind to properties inside an each block.
+{#each todos as todo}
+    <li class={{ done: todo.done }}>
+        <input
+            type="checkbox"
+            bind:checked={todo.done}
+        />
+
+        <input
+            type="text"
+            placeholder="What needs to be done?"
+            bind:value={todo.text}
+        />
+			</li>
+{/each}
+

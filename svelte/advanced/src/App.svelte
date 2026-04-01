@@ -1,74 +1,73 @@
 <script>
-    import { Spring } from "svelte/motion";
+	let todos = $state([
+		{ done: false, text: 'finish Svelte tutorial' },
+		{ done: false, text: 'build an app' },
+		{ done: false, text: 'world domination' }
+	]);
 
-	let coords = new Spring({ x: 50, y: 50 }, {
-        stiffness: 0.1,
-        damping: 0.25
-    });
-	let size = new Spring(10);
+	function add() {
+		todos.push({
+			done: false,
+			text: ''
+		});
+	}
+
+	function clear() {
+		todos = todos.filter((t) => !t.done);
+	}
+
+	let remaining = $derived(todos.filter((t) => !t.done).length);
 </script>
 
-<svg
-	onmousemove={(e) => {
-		coords.target = { x: e.clientX, y: e.clientY };
-	}}
-	onmousedown={() => (size.target = 30)}
-	onmouseup={() => (size.target = 10)}
-	role="presentation"
->
-	<circle
-		cx={coords.current.x}
-		cy={coords.current.y}
-		r={size.current}
-	></circle>
-</svg>
+<div class="centered">
+	<h1>todos</h1>
 
-<div class="controls">
-	<label>
-		<h3>stiffness ({coords.stiffness})</h3>
-		<input
-			bind:value={coords.stiffness}
-			type="range"
-			min="0.01"
-			max="1"
-			step="0.01"
-		/>
-	</label>
+	<ul class="todos">
+		{#each todos as todo}
+			<li class={{ done: todo.done }}>
+				<input
+					type="checkbox"
+					bind:checked={todo.done}
+				/>
 
-	<label>
-		<h3>damping ({coords.damping})</h3>
-		<input
-			bind:value={coords.damping}
-			type="range"
-			min="0.01"
-			max="1"
-			step="0.01"
-		/>
-	</label>
+				<input
+					type="text"
+					placeholder="What needs to be done?"
+					bind:value={todo.text}
+				/>
+			</li>
+		{/each}
+	</ul>
+
+	<p>{remaining} remaining</p>
+
+	<button onclick={add}>
+		Add new
+	</button>
+
+	<button onclick={clear}>
+		Clear completed
+	</button>
 </div>
 
 <style>
-	svg {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		left: 0;
-		top: 0;
+	.centered {
+		max-width: 20em;
+		margin: 0 auto;
 	}
 
-	circle {
-		fill: #ff3e00;
+	.done {
+		opacity: 0.4;
 	}
 
-	.controls {
-		position: absolute;
-		top: 1em;
-		right: 1em;
-		width: 200px;
-		user-select: none;
+	li {
+		display: flex;
 	}
 
-	.controls input {
-		width: 100%;
+	input[type="text"] {
+		flex: 1;
+		padding: 0.5em;
+		margin: -0.2em 0;
+		border: none;
 	}
 </style>
