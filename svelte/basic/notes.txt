@@ -47,3 +47,19 @@ clearInterval
 are automatically assigned
 
 effects react to state changes
+
+runes can only be used in .svelte.js files
+
+global states can be stored in .svelte.js files
+export const counter = $state({
+    count: 0
+})
+
+to be used in component file eg
+<script>
+	import { counter } from './shared.svelte';
+</script>
+
+<button onclick={() => counter.count += 1}>
+	clicks: {counter.count}
+</button>
