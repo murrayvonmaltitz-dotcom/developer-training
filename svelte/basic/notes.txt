@@ -85,3 +85,23 @@ export const counter = $state({
 </script>
 
 <p>The answer is {answer}</p>
+
+//we can use the spread operator to pass through object values as props
+eg
+<script>
+	import PackageInfo from '../components/PackageInfo.svelte';
+
+	const pkg = {
+		name: 'svelte',
+		version: 5,
+		description: 'blazing fast',
+		website: 'https://svelte.dev'
+	};
+</script>
+
+<PackageInfo {...pkg} />
+
+//for use 
+<script>
+	let { name, version, description, website } = $props();
+</script>

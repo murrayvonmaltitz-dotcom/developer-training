@@ -1,5 +1,19 @@
 <script>
-	import Nested from '../components/Nested.svelte';
+	import PackageInfo from '../components/PackageInfo.svelte';
+
+	const pkg = {
+		name: 'svelte',
+		version: 5,
+		description: 'blazing fast',
+		website: 'https://svelte.dev'
+	};
 </script>
 
-<Nested />
+<PackageInfo {...pkg} />
+
+<!-- <PackageInfo
+	version={pkg.version}
+	description={pkg.description}
+	website={pkg.website}
+/> -->
+
