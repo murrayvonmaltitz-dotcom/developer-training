@@ -248,3 +248,10 @@ eg
 		{flavour}
 	</label>
 {/each}
+
+//in a select we can omit the values attribute on options
+<select multiple bind:value={flavours}>
+{#each ['cookies and cream', 'mint choc chip', 'raspberry ripple'] as flavour}
+	<option>{flavour}</option>
+{/each}
+</select>
