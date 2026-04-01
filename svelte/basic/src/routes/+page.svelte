@@ -1,6 +1,9 @@
-<script lang="ts">
-    let name = "svelte"
-</script>
+<p>This is a paragraph.</p>
 
-
-<h1>Hello {name.toUpperCase()}</h1>
+<style>
+	p{
+		color: goldenrod;	
+		font-family: 'comic Sans';
+		font-size: 2em
+	}
+</style>
