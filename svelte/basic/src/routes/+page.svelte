@@ -1,12 +1,12 @@
 <script>
-	import Stepper from '../components/Stepper.svelte';
+	import BigRedButton from './BigRedButton.svelte';
+	import horn from './horn.mp3';
 
-	let value = $state(0);
+	const audio = new Audio();
+	audio.src = horn;
+
+	function honk() {
+		audio.load();
+		audio.play();
+	}
 </script>
-
-<p>The current value is {value}</p>
-
-<Stepper 
-    increment={() => value += 1}
-    decrement={() => value -= 1}
-/>

@@ -201,4 +201,10 @@ eg
 </div>
 
 
-You can pass event handlers to components like any other prop.
+//You can pass event handlers to components like any other prop.
+
+//We can also spread event handlers directly onto elements. 
+eg 
+<button {...props}>
+	push
+</button>
