@@ -1,20 +1,17 @@
 <script>
-	import Thing from '../components/Thing.svelte';
+	import { roll } from '../utils.js';
 
-	let things = $state([
-		{ id: 1, name: 'apple' },
-		{ id: 2, name: 'banana' },
-		{ id: 3, name: 'carrot' },
-		{ id: 4, name: 'doughnut' },
-		{ id: 5, name: 'egg' }
-	]);
+	let promise = $state(roll());
 </script>
 
-<button onclick={() => things.shift()}>
-	Remove first thing
+<button onclick={() => promise = roll()}>
+	roll the dice
 </button>
 
-{#each things as thing (thing.id)}
-	<Thing name={thing.name} />
-    {thing.id}
-{/each}
+{#await promise}
+    <p>...rolling</p>
+{:then number} 
+    <p>You rolled a {number}</p>
+{:catch error}
+    <p style="color:red">{error.message}</p>
+{/await}
