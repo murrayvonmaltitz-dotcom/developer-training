@@ -114,3 +114,8 @@ eg (will display as a p tag not <p> text)
 
 //media elements binding, done at
 https://svelte.dev/tutorial/svelte/media-elements
+
+//dimensions
+You can add clientWidth, clientHeight, offsetWidth and offsetHeight bindings to any element, 
+and Svelte will update the bound values using a ResizeObserver:
+
