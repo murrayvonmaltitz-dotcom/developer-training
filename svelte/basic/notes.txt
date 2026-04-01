@@ -32,3 +32,10 @@ eg
 </button>
 
 //$derived is used tp derive state from another state
+
+//use snapshot to console data
+eg
+console.log($state.snapshot(numbers));
+or $inspect
+eg 
+$inspect(numbers).with(console.trace);
