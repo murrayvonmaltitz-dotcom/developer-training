@@ -1,0 +1,5 @@
+//create project
+npx sv create
+
+//run project
+npm run dev
