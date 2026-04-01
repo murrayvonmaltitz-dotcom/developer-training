@@ -208,3 +208,12 @@ eg
 <button {...props}>
 	push
 </button>
+
+// bind: can be used when a parent component is not setting props to a child component
+<script>
+	let name = $state('world');
+</script>
+
+<input bind:value={name} />
+
+<h1>Hello {name}!</h1>

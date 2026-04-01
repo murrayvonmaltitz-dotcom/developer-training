@@ -1,12 +1,7 @@
 <script>
-	import BigRedButton from './BigRedButton.svelte';
-	import horn from './horn.mp3';
-
-	const audio = new Audio();
-	audio.src = horn;
-
-	function honk() {
-		audio.load();
-		audio.play();
-	}
+	let name = $state('world');
 </script>
+
+<input bind:value={name} />
+
+<h1>Hello {name}!</h1>
