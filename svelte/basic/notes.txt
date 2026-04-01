@@ -39,3 +39,11 @@ console.log($state.snapshot(numbers));
 or $inspect
 eg 
 $inspect(numbers).with(console.trace);
+
+
+for state interval
+setInterval
+clearInterval
+are automatically assigned
+
+effects react to state changes
