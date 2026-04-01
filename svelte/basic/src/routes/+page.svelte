@@ -1,1 +1,6 @@
-<h1>Welcome!</h1>
+<script lang="ts">
+    let name = "svelte"
+</script>
+
+
+<h1>Hello {name.toUpperCase()}</h1>
