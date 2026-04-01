@@ -112,3 +112,5 @@ eg (will display as a p tag not <p> text)
 			</li>
 {/each}
 
+//media elements binding, done at
+https://svelte.dev/tutorial/svelte/media-elements
