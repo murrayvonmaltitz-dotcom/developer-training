@@ -129,3 +129,15 @@ eg
     <p>{count} is between 5 and 10</p>
 {/if}
 
+
+//each blocks used for displaying items in an array with index i
+eg 
+{#each colors as color, i}
+	<button
+		style="background: {color}"
+		aria-label="{color}"
+		aria-current={selected === color}
+		onclick={() => selected = color}
+	>{i + 1}</button>
+{/each}
+
