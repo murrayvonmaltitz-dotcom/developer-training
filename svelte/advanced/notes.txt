@@ -122,3 +122,20 @@ and Svelte will update the bound values using a ResizeObserver:
 //bind:this
 You can use the special bind:this directive 
 to get a readonly binding to an element in your component.
+
+//component props can also be binded
+//within component eg
+let { value = $bindable(''), onsubmit } = $props();
+//in parent
+<Keypad bind:value={pin} {onsubmit} />
+
+//can bind to component instances 
+on example on  svelte docs
+
+//binding to component instances 
+Just as you can bind to DOM elements, you can bind to component instances themselves with bind:this.
+
+This is useful in the rare cases that you need to interact with a component programmatically (rather than by providing it with updated props). 
+Revisiting our canvas app from a few exercises ago, it would be nice to add a button to clear the screen.
+
+
