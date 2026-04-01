@@ -119,3 +119,6 @@ https://svelte.dev/tutorial/svelte/media-elements
 You can add clientWidth, clientHeight, offsetWidth and offsetHeight bindings to any element, 
 and Svelte will update the bound values using a ResizeObserver:
 
+//bind:this
+You can use the special bind:this directive 
+to get a readonly binding to an element in your component.
