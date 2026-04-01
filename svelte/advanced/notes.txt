@@ -76,3 +76,6 @@ consult docs if need more info
 {@render monkey('🙈', 'see no evil')}
 {@render monkey('🙈', 'see no evil')}
 //will render twice 
+
+//we can pass snippets to components as props
+https://svelte.dev/tutorial/svelte/passing-snippets
