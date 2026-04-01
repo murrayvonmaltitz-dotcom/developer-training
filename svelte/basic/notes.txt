@@ -141,3 +141,13 @@ eg
 	>{i + 1}</button>
 {/each}
 
+//note on re-rendering components svelte vs react
+If you're coming from React, this might seem strange, 
+because you're used to the entire component re-rendering when state changes.
+Svelte works differently: the component 'runs' once, and subsequent updates are 'fine-grained'. 
+This makes things faster and gives you more control.
+
+//keyed each block gives more control over components when adding/removing and reordering arrays eg
+{#each things as thing (thing.id)}
+	<Thing name={thing.name} />
+{/each}
