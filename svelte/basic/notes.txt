@@ -30,3 +30,5 @@ eg
 	Clicked {count}
 	{count === 1 ? 'time' : 'times'}
 </button>
+
+//$derived is used tp derive state from another state
