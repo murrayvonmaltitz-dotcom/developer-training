@@ -255,3 +255,15 @@ eg
 	<option>{flavour}</option>
 {/each}
 </select>
+
+//classes can be assigned dynamically 
+<button
+		class={["card", {flipped}]}
+		onclick={() => flipped = !flipped}
+	>
+
+or 
+<button
+		class="card {flipped ? 'flipped' : ''}"
+		onclick={() => flipped = !flipped}
+	>
