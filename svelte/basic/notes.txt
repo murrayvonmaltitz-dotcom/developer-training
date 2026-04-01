@@ -3,3 +3,15 @@ npx sv create
 
 //run project
 npm run dev
+
+//styles are scoped to the component
+
+@html to render html strings
+eg
+<script>
+	let string = `this string contains some <strong>HTML!!!</strong>`;
+</script>
+
+<p>{@html string}</p>
+
+
