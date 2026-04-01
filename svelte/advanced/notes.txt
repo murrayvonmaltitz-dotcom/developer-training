@@ -142,3 +142,21 @@ Revisiting our canvas app from a few exercises ago, it would be nice to add a bu
 
 
 //animate and flip can be used to apply motion to the elements that ARE NOT transitioning
+
+//context API
+The context API provides a mechanism for components to 'talk' 
+to each other without passing around data and functions as props, 
+or dispatching lots of events.
+
+//setitems addItem is a function
+    import { setContext } from 'svelte';
+    setContext('canvas', { addItem })
+
+//get items where draw is a function 
+    import { getContext } from 'svelte';
+    getContext('canvas').addItem(draw)
+
+
+setContext and getContext must be called during component initialisation, 
+so that the context can be correctly bound. 
+

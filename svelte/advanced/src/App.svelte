@@ -1,68 +1,42 @@
 <script>
-	import TodoList from './TodoList.svelte';
+	import Canvas from './Canvas.svelte';
+	import Square from './Square.svelte';
 
-	const todos = $state([
-		{ id: 1, done: false, description: 'write some docs' },
-		{ id: 2, done: false, description: 'start writing blog post' },
-		{ id: 3, done: true, description: 'buy some milk' },
-		{ id: 4, done: false, description: 'mow the lawn' },
-		{ id: 5, done: false, description: 'feed the turtle' },
-		{ id: 6, done: false, description: 'fix some bugs' }
-	]);
+	// we use a seeded random number generator to get consistent jitter
+	let seed = 1;
 
-	let uid = todos.length + 1;
+	function random() {
+		seed *= 16807;
+		seed %= 2147483647;
+		return (seed - 1) / 2147483646;
+	}
 
-	function remove(todo) {
-		const index = todos.indexOf(todo);
-		todos.splice(index, 1);
+	function jitter(amount) {
+		return amount * (random() - 0.5);
 	}
 </script>
 
-<div class="board">
-	<input
-		placeholder="what needs to be done?"
-		onkeydown={(e) => {
-			if (e.key !== 'Enter') return;
-
-			todos.push({
-				id: uid++,
-				done: false,
-				description: e.currentTarget.value
-			});
-
-			e.currentTarget.value = '';
-		}}
-	/>
-
-	<div class="todo">
-		<h2>todo</h2>
-		<TodoList todos={todos.filter((t) => !t.done)} {remove} />
-	</div>
-
-	<div class="done">
-		<h2>done</h2>
-		<TodoList todos={todos.filter((t) => t.done)} {remove} />
-	</div>
+<div class="container">
+	<Canvas width={800} height={1200}>
+		{#each Array(12) as _, c}
+			{#each Array(22) as _, r}
+				<Square
+					x={180 + c * 40 + jitter(r * 2)}
+					y={180 + r * 40 + jitter(r * 2)}
+					size={40}
+                    rotate={jitter(r * 0.05)}
+				/>
+			{/each}
+		{/each}
+	</Canvas>
 </div>
 
 <style>
-	.board {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-column-gap: 1em;
-		max-width: 36em;
+	.container {
+		height: 100%;
+		aspect-ratio: 2 / 3;
 		margin: 0 auto;
-	}
-
-	.board > input {
-		font-size: 1.4em;
-		grid-column: 1/3;
-		padding: 0.5em;
-		margin: 0 0 1rem 0;
-	}
-
-	h2 {
-		font-size: 2em;
-		font-weight: 200;
+		background: rgb(224, 219, 213);
+		filter: drop-shadow(0.5em 0.5em 1em rgba(0, 0, 0, 0.1));
 	}
 </style>
