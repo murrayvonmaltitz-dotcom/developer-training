@@ -28,3 +28,7 @@ create provider in app/providers/filament
 create filament User
 php artisan make:filament-user
 login http://localhost:8000/laracronf/login
+
+
+php artisan make:filament-resource Conference --generate
+creates a new menu on webpage that has store, edit, view, destroy functionality
