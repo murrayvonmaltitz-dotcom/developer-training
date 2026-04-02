@@ -3,4 +3,8 @@ https://blueprint.laravelshift.com/
 composer require -W --dev laravel-shift/blueprint
 php artisan blueprint:new
 
+after draft.yml file is setup run with 
+php artisan blueprint:build
+builds factories, migrations and models 
+
 //using tall stack
