@@ -3,6 +3,11 @@
 namespace App\Filament\Resources\Conferences\Schemas;
 
 use App\Enums\Region;
+use App\Filament\Resources\Speakers\SpeakerResource;
+use App\Filament\Resources\Venues\Schemas\VenueForm;
+use App\Filament\Resources\Venues\VenueResource;
+use App\Models\Speaker;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\MarkdownEditor;
@@ -14,6 +19,7 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Markdown;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ConferenceForm
 {
@@ -49,9 +55,18 @@ class ConferenceForm
                     ->enum(Region::class)
                     ->options(Region::class),
                 Select::make('venue_id')
+                    ->searchable()
+                    ->preload()
+                    // ->editOptionForm()
+                    // ->createOptionForm()
                     ->relationship('venue', 'name', modifyQueryUsing: function (Builder $query, Get $get) {
                         return $query->where('region', $get('region'));
                     }),
+                CheckboxList::make('speakers')
+                    ->relationship('speakers', 'name')
+                    ->options(
+                        Speaker::all()->pluck('name', 'id')
+                    ),
             ]);
     }
 }
