@@ -6,6 +6,7 @@ use App\Enums\Region;
 use App\Filament\Resources\Speakers\SpeakerResource;
 use App\Filament\Resources\Venues\Schemas\VenueForm;
 use App\Filament\Resources\Venues\VenueResource;
+use App\Models\Conference;
 use App\Models\Speaker;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
@@ -26,47 +27,6 @@ class ConferenceForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                TextInput::make('name')
-                    ->label('Conference')
-                    ->default("My Conference")
-                    ->helperText('The name of the conference.')
-                    ->maxLength(60)
-                    ->required(),
-                MarkdownEditor::make('description')
-                    ->helperText("hello")
-                    ->required(),
-                DatePicker::make('start_date')
-                    ->native(false)
-                    ->required(),
-                DateTimePicker::make('end_date')
-                    ->native(false)
-                    ->required(),
-                Toggle::make("is_published")
-                    ->default(false),
-                Select::make('status')
-                ->options([
-                    'draft' => 'Draft',
-                    'Published' => 'Published',
-                    'archived' => 'Archived'
-                    ]),
-                Select::make('region')
-                    ->live()
-                    ->enum(Region::class)
-                    ->options(Region::class),
-                Select::make('venue_id')
-                    ->searchable()
-                    ->preload()
-                    // ->editOptionForm()
-                    // ->createOptionForm()
-                    ->relationship('venue', 'name', modifyQueryUsing: function (Builder $query, Get $get) {
-                        return $query->where('region', $get('region'));
-                    }),
-                CheckboxList::make('speakers')
-                    ->relationship('speakers', 'name')
-                    ->options(
-                        Speaker::all()->pluck('name', 'id')
-                    ),
-            ]);
+            ->components(Conference::getForm());
     }
 }

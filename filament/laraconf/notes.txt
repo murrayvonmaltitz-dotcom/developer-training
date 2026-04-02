@@ -40,3 +40,6 @@ label, required and rules changes
 composer require spatie/ray
 laravel debugging tool ray("") instead of dd() for real time debugging
 needs desktop application installed
+
+we can use tabs and wizards in forms to navigate smoothly between pages
+
