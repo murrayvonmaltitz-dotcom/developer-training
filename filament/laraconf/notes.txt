@@ -32,3 +32,7 @@ login http://localhost:8000/laracronf/login
 
 php artisan make:filament-resource Conference --generate
 creates a new menu on webpage that has store, edit, view, destroy functionality
+
+can make changes to generated resources by navigating via model resources
+label, required and rules changes
+->rules(['max:60' new CustomRule])
