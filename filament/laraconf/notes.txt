@@ -1,0 +1,6 @@
+//can quickly make models with laravel blueprint (yml file)
+https://blueprint.laravelshift.com/
+composer require -W --dev laravel-shift/blueprint
+php artisan blueprint:new
+
+//using tall stack
