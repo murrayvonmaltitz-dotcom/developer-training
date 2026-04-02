@@ -36,3 +36,7 @@ creates a new menu on webpage that has store, edit, view, destroy functionality
 can make changes to generated resources by navigating via model resources
 label, required and rules changes
 ->rules(['max:60' new CustomRule])
+
+composer require spatie/ray
+laravel debugging tool ray("") instead of dd() for real time debugging
+needs desktop application installed
