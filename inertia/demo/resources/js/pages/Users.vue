@@ -18,12 +18,7 @@
   </Layout>
 </template>
 
-<script>
-import Layout from "../Shared/Layout.vue";
-
-export default {
-  components: { Layout },
-
-  props: { time: String }
-};
+<script setup>
+    import Layout from "../Shared/Layout.vue";
+    defineProps({ time: String })
 </script>
