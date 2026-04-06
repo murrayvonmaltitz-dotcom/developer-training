@@ -1,5 +1,4 @@
 <template>
-  <Layout>
     <h1 class="text-3xl">
       Users
     </h1>
@@ -15,10 +14,15 @@
         Refresh
       </Link>
     </div>
-  </Layout>
 </template>
 
-<script setup>
-    import Layout from "../Shared/Layout.vue";
-    defineProps({ time: String })
+<script>
+import Layout from "../Shared/Layout.vue";
+
+export default {
+  components: { Layout },
+  layout: Layout,
+
+  props: { time: String }
+};
 </script>
