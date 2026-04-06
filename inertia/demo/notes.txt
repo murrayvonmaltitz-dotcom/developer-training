@@ -3,3 +3,5 @@ can create app with laravel built in kits
 progress indicators built in
 
 @csrf token auto added
+
+no webpack.mix for code splitting lesson //skipped

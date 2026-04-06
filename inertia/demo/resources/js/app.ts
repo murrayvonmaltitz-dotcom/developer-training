@@ -17,7 +17,7 @@ createInertiaApp({
       .component("Link", Link)
       .mount(el)
     },
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    title: (title) => `My App - ` + (title ? `${title}` : appName),
     progress: {
         color: '#4B5563',
         showSpinner: true
