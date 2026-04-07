@@ -8,7 +8,7 @@
       <label class="block mb-2 uppercase font-bold text-xs text-gray-700" for="name"> Name </label>
 
       <input v-model="form.name" class="border border-gray-400 p-2 w-full" type="text" name="name" id="name" required />
-        <div v-if="form.errors.name" v-text="form.errors.name" class="text-red-500 text-xs mt-1"></div>
+      <div v-if="form.errors.name" v-text="form.errors.name" class="text-red-500 text-xs mt-1"></div>
     </div>
 
     <div class="mb-6">
@@ -28,20 +28,19 @@
         type="password"
         name="password"
         id="password"
-        required
       />
-    <div v-if="form.errors.password" v-text="form.errors.password" class="text-red-500 text-xs mt-1"></div>
+
+      <div v-if="form.errors.password" v-text="form.errors.password" class="text-red-500 text-xs mt-1"></div>
     </div>
 
     <div class="mb-6">
-      <button type="submit" class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500" :disabled="processing">Submit</button>
+      <button type="submit" class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500" :disabled="form.processing">Submit</button>
     </div>
   </form>
 </template>
 
 <script setup>
-import { reactive } from 'vue';
-import {useForm} from '@inertiajs/vue3'
+import { useForm } from '@inertiajs/vue3'
 
 let form = useForm({
   name: '',
@@ -49,13 +48,7 @@ let form = useForm({
   password: '',
 });
 
-let processing = ref(false)
-
-defineProps({
-  errors: Object
-});
-
 let submit = () => {
-    form.post('/users');
+  form.post('/users');
 };
 </script>

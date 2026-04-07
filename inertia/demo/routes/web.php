@@ -10,7 +10,7 @@ Route::get('/', function () {
 });
 
 Route::get('/users', function () {
-    sleep(3);
+    sleep(1);
     return Inertia::render('Users/Index', [
             'users' => User::query()
             ->when(Request::input('search'), function ($query, $search) {
